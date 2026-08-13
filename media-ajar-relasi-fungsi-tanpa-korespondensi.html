@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lab Relasi &amp; Fungsi · Latihan Interaktif Kelas 8</title>
+<meta name="description" content="Latihan interaktif Bab 4: Relasi dan Fungsi untuk siswa SMP Kelas 8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   0. RESET & VARIABEL DASAR
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+img,svg{ display:block; max-width:100%; }
+button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+input,textarea{ font:inherit; }
+ul{ list-style:none; }
+a{ color:inherit; }
+
+:root{
+  --ink:#16213E;
+  --ink-soft:#5B6584;
+  --ink-faint:#8A93AD;
+  --paper:#F1F4F3;
+  --paper-deep:#E6ECEA;
+  --card:#FFFFFF;
+  --line:#DCE4E2;
+  --line-strong:#B7C4C1;
+
+  --relasi:#FF6A3D;
+  --relasi-deep:#D5501F;
+  --relasi-soft:#FFE6DA;
+
+  --fungsi:#12946B;
+  --fungsi-deep:#0B6B4C;
+  --fungsi-soft:#DCF3E9;
+
+  --korespondensi:#7C5CFC;
+  --korespondensi-deep:#5B3FD1;
+  --korespondensi-soft:#EAE4FF;
+
+  --benar:#12946B;
+  --benar-soft:#DCF3E9;
+  --salah:#E14848;
+  --salah-deep:#B5271F;
+  --salah-soft:#FDE3E3;
+
+  --font-display:'Baloo 2', system-ui, sans-serif;
+  --font-body:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:'Space Mono', ui-monospace, 'SF Mono', monospace;
+
+  --radius-sm:10px;
+  --radius-md:18px;
+  --radius-lg:28px;
+  --radius-pill:999px;
+  --shadow-card:0 4px 18px -6px rgba(22,33,62,.14);
+  --shadow-pop:0 14px 34px -10px rgba(22,33,62,.26);
+
+  --mod-accent:var(--relasi);
+  --mod-soft:var(--relasi-soft);
+  --nav-h:60px;
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+.grid-texture{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:34px 34px;
+  opacity:.35;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%, black 40%, transparent 85%);
+}
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:700; line-height:1.15; letter-spacing:-0.01em; }
+.eyebrow{ font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.14em; font-size:clamp(11px,2vw,12.5px); font-weight:700; }
+.mono{ font-family:var(--font-mono); }
+.wrap{ max-width:1080px; margin-inline:auto; padding-inline:clamp(16px,5vw,40px); position:relative; z-index:1; }
+:focus-visible{ outline:3px solid var(--korespondensi); outline-offset:3px; border-radius:6px; }
+
+/* ============================================================
+   1. TOMBOL
+   ============================================================ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:var(--font-body); font-weight:700; font-size:clamp(14px,2.2vw,15.5px);
+  padding:13px 26px; border-radius:var(--radius-pill);
+  background:var(--ink); color:#fff;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.btn:hover:not(:disabled){ transform:translateY(-2px); box-shadow:var(--shadow-pop); }
+.btn:active:not(:disabled){ transform:translateY(0); }
+.btn-ghost{ background:transparent; color:var(--ink); box-shadow:none; border:2px solid var(--line-strong); }
+.btn-ghost:hover:not(:disabled){ border-color:var(--ink); background:var(--card); }
+.btn-accent{ background:var(--mod-accent); }
+.module-card .btn-accent{ animation:ctaGlow 2.6s ease-in-out infinite; }
+@keyframes ctaGlow{ 0%,100%{ box-shadow:var(--shadow-card); } 50%{ box-shadow:0 4px 22px -4px var(--card-accent,var(--relasi)); } }
+@media (prefers-reduced-motion: reduce){ .module-card .btn-accent{ animation:none; } }
+
+#navNext.is-flash{ animation:navFlash .6s ease; }
+@keyframes navFlash{ 0%{ box-shadow:0 0 0 0 var(--mod-accent); } 60%{ box-shadow:0 0 0 10px rgba(0,0,0,0); } 100%{ box-shadow:var(--shadow-card); } }
+.btn:disabled{ opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn svg{ width:18px; height:18px; flex-shrink:0; }
+.chip{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--font-mono); font-size:12px; font-weight:700;
+  padding:5px 12px; border-radius:var(--radius-pill);
+  background:var(--mod-soft); color:var(--ink);
+}
+
+/* ============================================================
+   2. TOPBAR
+   ============================================================ */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(241,244,243,.9); backdrop-filter:blur(10px) saturate(140%);
+  border-bottom:1.5px solid var(--line);
+}
+.topbar-inner{
+  max-width:1080px; margin-inline:auto; padding-inline:clamp(14px,4vw,40px);
+  height:var(--nav-h); display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.brand-mark{
+  width:36px; height:36px; border-radius:10px; background:var(--ink); position:relative; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.brand-mark i{ position:absolute; width:6px; height:6px; border-radius:50%; background:#fff; }
+.brand-mark i:nth-child(1){ top:8px; left:8px; }
+.brand-mark i:nth-child(2){ bottom:8px; right:8px; }
+#topbarTitle{ font-family:var(--font-display); font-weight:700; font-size:clamp(13.5px,2.6vw,16px); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.topbar-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+.home-link{ display:flex; flex-shrink:0; }
+
+.stage-dots-row{ display:none; border-top:1px solid var(--line); }
+.stage-dots-row.is-visible{ display:flex; justify-content:center; padding:10px 14px; gap:9px; }
+.stage-dot{
+  width:11px; height:11px; border-radius:50%; background:var(--paper-deep); border:2px solid var(--line-strong);
+  cursor:default; transition:all .2s ease;
+}
+.stage-dot.is-accessible{ cursor:pointer; }
+.stage-dot.is-current{ background:var(--mod-accent); border-color:var(--mod-accent); transform:scale(1.25); }
+.stage-dot.is-done:not(.is-current){ background:var(--fungsi); border-color:var(--fungsi); }
+
+.overall-progress-row{ height:5px; background:var(--line); position:relative; }
+.overall-progress-row i{ position:absolute; inset:0 auto 0 0; width:0%; background:var(--relasi); transition:width .5s ease; }
+
+/* ============================================================
+   3. BERANDA · daftar modul
+   ============================================================ */
+.home-hero{ padding-block:clamp(32px,7vw,56px) clamp(10px,3vw,20px); }
+.home-hero .eyebrow{ color:var(--relasi); display:inline-flex; align-items:center; gap:8px; background:var(--relasi-soft); padding:6px 14px; border-radius:var(--radius-pill); margin-bottom:16px; }
+.home-hero h1{ font-size:clamp(28px,5.4vw,44px); margin-bottom:14px; }
+.home-hero p{ color:var(--ink-soft); font-size:clamp(15px,2.4vw,17px); max-width:56ch; margin-bottom:22px; }
+
+/* layar mulai dan identitas siswa */
+.start-shell{ min-height:calc(100vh - var(--nav-h) - 64px); display:grid; place-items:center; padding-block:clamp(32px,8vw,78px); }
+.start-card{ width:min(100%,760px); background:var(--card); border:1.5px solid var(--line); border-radius:var(--radius-lg); box-shadow:var(--shadow-pop); padding:clamp(24px,5vw,44px); text-align:center; }
+.start-card .eyebrow{ color:var(--relasi-deep); display:inline-flex; align-items:center; gap:8px; background:var(--relasi-soft); padding:6px 14px; border-radius:var(--radius-pill); margin-bottom:16px; }
+.start-card h1{ font-size:clamp(30px,5.6vw,46px); margin-bottom:14px; }
+.start-card > p{ color:var(--ink-soft); font-size:clamp(15px,2.4vw,17px); max-width:55ch; margin:0 auto 24px; }
+.start-form{ max-width:610px; margin:26px auto 0; padding-top:25px; border-top:1.5px dashed var(--line-strong); text-align:left; }
+.start-form[hidden]{ display:none; }
+.start-form-head{ margin-bottom:17px; }
+.start-form-head h2{ font-size:22px; margin-bottom:4px; }
+.start-form-head p{ color:var(--ink-soft); font-size:13.5px; }
+.student-fields{ display:grid; gap:13px; }
+@media (min-width:680px){ .student-fields{ grid-template-columns:2fr 1fr 1fr; align-items:end; } }
+.student-field{ display:grid; gap:6px; }
+.student-field label{ font-weight:700; font-size:13px; }
+.student-field input{ width:100%; min-height:46px; border:2px solid var(--line-strong); border-radius:var(--radius-md); padding:10px 13px; color:var(--ink); background:var(--paper); transition:border-color .2s ease,background .2s ease; }
+.student-field input:focus{ outline:none; border-color:var(--relasi); background:var(--card); }
+.form-error{ min-height:1.4em; margin-top:10px; color:var(--salah-deep); font-size:13px; font-weight:600; }
+.session-note{ margin-top:12px; color:var(--ink-faint); font-size:12px; line-height:1.45; }
+.start-form .btn{ margin-top:5px; width:100%; }
+
+.overall-card{ display:flex; align-items:center; gap:16px; background:var(--card); border:1.5px solid var(--line); border-radius:var(--radius-lg); padding:18px 22px; box-shadow:var(--shadow-card); margin-bottom:clamp(26px,5vw,40px); }
+.overall-card .track{ flex:1; height:10px; border-radius:var(--radius-pill); background:var(--paper-deep); overflow:hidden; }
+.overall-card .track i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--relasi),var(--korespondensi)); border-radius:var(--radius-pill); transition:width .6s ease; }
+.overall-card b{ font-family:var(--font-display); font-size:20px; flex-shrink:0; min-width:48px; text-align:right; }
+.overall-card span{ font-size:12.5px; color:var(--ink-faint); font-family:var(--font-mono); flex-shrink:0; }
+
+.module-grid{ display:grid; gap:18px; padding-bottom:clamp(40px,7vw,64px); grid-template-columns:1fr; }
+@media (min-width:760px){ .module-grid{ grid-template-columns:repeat(2,1fr); } }
+.module-card{
+  background:var(--card); border:1.5px solid var(--line); border-radius:var(--radius-lg);
+  padding:clamp(20px,4vw,26px); box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:14px;
+  position:relative; overflow:hidden;
+}
+.module-card::before{ content:""; position:absolute; top:0; left:0; right:0; height:5px; background:var(--card-accent,var(--relasi)); }
+.module-card .mc-icon{ width:46px; height:46px; border-radius:14px; background:var(--card-soft,var(--relasi-soft)); color:var(--card-accent,var(--relasi)); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:800; font-family:var(--font-display); transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
+.module-card:hover .mc-icon{ transform:rotate(-8deg) scale(1.12); }
+.module-card h3{ font-size:clamp(18px,3vw,21px); }
+.module-card p{ color:var(--ink-soft); font-size:14px; flex:1; }
+.module-card .track{ height:8px; border-radius:var(--radius-pill); background:var(--paper-deep); overflow:hidden; }
+.module-card .track i{ display:block; height:100%; width:0%; background:var(--card-accent,var(--relasi)); border-radius:var(--radius-pill); transition:width .5s ease; }
+.module-card .mc-foot{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.module-card .mc-stagecount{ font-size:12px; color:var(--ink-faint); font-family:var(--font-mono); }
+.module-card .btn{ padding:10px 22px; font-size:14px; }
+
+.alldone-banner{ display:flex; align-items:center; gap:16px; background:linear-gradient(120deg,var(--korespondensi-soft),var(--card) 70%); border:1.5px solid var(--korespondensi); border-radius:var(--radius-lg); padding:20px 24px; margin-bottom:28px; }
+.alldone-banner.is-hidden{ display:none; }
+.alldone-banner .ico{ font-size:30px; }
+.alldone-banner .alldone-copy{ flex:1; }
+.alldone-banner h3{ font-size:17px; margin-bottom:3px; }
+.alldone-banner p{ font-size:13.5px; color:var(--ink-soft); }
+.pdf-download-btn{ flex-shrink:0; background:var(--korespondensi-deep); }
+@media (max-width:620px){ .alldone-banner{ align-items:flex-start; flex-wrap:wrap; } .pdf-download-btn{ width:100%; } }
+
+/* ============================================================
+   4. TAMPILAN MODUL / TAHAP
+   ============================================================ */
+.module-view{ padding-block:clamp(20px,4vw,32px) clamp(50px,8vw,80px); }
+.stage-prompt{ max-width:760px; margin-bottom:clamp(20px,4vw,30px); }
+.stage-prompt .eyebrow{ color:var(--mod-accent); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.stage-prompt .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--mod-accent); flex-shrink:0; }
+.stage-prompt h2{ font-size:clamp(21px,4vw,29px); margin-bottom:8px; }
+.stage-prompt .stage-sub{ color:var(--ink-soft); font-size:clamp(14px,2.2vw,15.5px); }
+
+.stage-grid{ display:grid; gap:20px; grid-template-columns:1fr; align-items:start; }
+@media (min-width:920px){ .stage-grid{ grid-template-columns:1.15fr .85fr; gap:26px; } }
+.stage-visual, .stage-controls{ display:flex; flex-direction:column; gap:16px; min-width:0; }
+
+.panel{
+  background:var(--card); border:1.5px solid var(--line); border-radius:var(--radius-lg);
+  padding:clamp(16px,3.4vw,22px); box-shadow:var(--shadow-card);
+}
+.panel-title{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+.panel-title h4{ font-family:var(--font-mono); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); }
+
+.feedback-banner{
+  display:flex; gap:10px; align-items:flex-start; padding:13px 16px; border-radius:var(--radius-md);
+  border:1.5px solid var(--line-strong); background:var(--paper); font-size:13.8px; min-height:1px;
+  transition:background .25s ease, border-color .25s ease;
+}
+.feedback-banner .fb-ico{ flex-shrink:0; font-size:16px; line-height:1.3; }
+.feedback-banner.fb-idle{ background:var(--paper); border-color:var(--line-strong); color:var(--ink-soft); }
+.feedback-banner.fb-success{ background:var(--benar-soft); border-color:var(--benar); color:var(--ink); }
+.feedback-banner.fb-error{ background:var(--salah-soft); border-color:var(--salah); color:var(--ink); }
+.feedback-banner.fb-hint{ background:#FFF1D6; border-color:#E3A712; color:var(--ink); }
+
+.round-pips{ display:flex; gap:5px; }
+.round-pip{ width:8px; height:8px; border-radius:50%; background:var(--paper-deep); border:1.5px solid var(--line-strong); }
+.round-pip.is-done{ background:var(--fungsi); border-color:var(--fungsi); }
+.round-pip.is-current{ background:var(--mod-accent); border-color:var(--mod-accent); transform:scale(1.3); animation:pipPulse 1.6s ease-in-out infinite; }
+@keyframes pipPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(124,92,252,.35); } 50%{ box-shadow:0 0 0 5px rgba(124,92,252,0); } }
+
+.nav-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:clamp(24px,5vw,36px); }
+
+/* pilihan/opsi (dipakai di berbagai tahap) */
+.opt-list{ display:grid; gap:9px; }
+.opt{
+  display:flex; align-items:center; gap:12px; text-align:left; width:100%;
+  border:2px solid var(--line-strong); border-radius:var(--radius-md); padding:12px 15px;
+  font-weight:600; font-size:clamp(13.5px,2.2vw,14.5px); background:var(--card); transition:all .15s ease;
+}
+.opt:hover:not(:disabled){ border-color:var(--mod-accent); background:var(--mod-soft); }
+.opt .optmark{ width:24px; height:24px; border-radius:50%; border:2px solid var(--line-strong); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:transparent; }
+.opt.is-correct{ border-color:var(--benar); background:var(--benar-soft); }
+.opt.is-correct .optmark{ border-color:var(--benar); background:var(--benar); color:#fff; }
+.opt.is-correct .optmark::after{ content:"✓"; }
+.opt.is-wrong{ border-color:var(--salah); background:var(--salah-soft); }
+.opt.is-wrong .optmark{ border-color:var(--salah); background:var(--salah); color:#fff; }
+.opt.is-wrong .optmark::after{ content:"✕"; }
+.opt:disabled{ cursor:default; }
+.opt:disabled:not(.is-correct):not(.is-wrong){ opacity:.5; }
+
+.term-row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.term-btn{ display:flex; align-items:center; justify-content:center; text-align:center; border:2px solid var(--line-strong); border-radius:var(--radius-md); padding:11px 8px; font-weight:700; font-size:12.5px; background:var(--card); transition:all .15s ease; }
+.term-btn:hover{ border-color:var(--mod-accent); background:var(--mod-soft); }
+.term-btn.is-active{ border-color:var(--mod-accent); background:var(--mod-soft); color:var(--mod-accent); }
+
+/* prediksi / refleksi terbuka (tanpa nilai benar-salah) */
+.reflect-label{ display:flex; gap:9px; align-items:flex-start; font-weight:700; font-size:13.8px; margin-bottom:2px; }
+.reflect-label .ico-wrap{ flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--mod-soft); color:var(--mod-accent); display:flex; align-items:center; justify-content:center; font-size:12px; }
+.reflect-input{
+  width:100%; border:2px solid var(--line-strong); border-radius:var(--radius-md); padding:11px 14px;
+  font-family:var(--font-body); font-size:13.8px; resize:vertical; background:var(--paper); transition:border-color .2s ease;
+}
+.reflect-input:focus{ border-color:var(--mod-accent); background:var(--card); }
+.reflect-input.has-content{ border-color:var(--line-strong); background:var(--card); }
+.reflect-hint{ font-size:12px; color:var(--ink-faint); margin-top:5px; }
+
+/* readout langsung (dipakai di eksplorasi bebas) */
+.readout-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.recap-list{ display:grid; gap:12px; }
+.recap-item{ display:flex; gap:11px; align-items:flex-start; font-size:13.8px; line-height:1.5; }
+.recap-item .rico{ flex-shrink:0; width:24px; height:24px; border-radius:50%; background:var(--mod-soft); color:var(--mod-accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; margin-top:1px; }
+.reflect-q + .reflect-q{ margin-top:18px; padding-top:18px; border-top:1.5px dashed var(--line); }
+.readout{ flex:1; min-width:120px; background:var(--paper); border:1.5px solid var(--line); border-radius:var(--radius-md); padding:10px 14px; }
+.readout .rlabel{ font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); display:block; margin-bottom:3px; }
+.readout .rvalue{ font-family:var(--font-display); font-size:19px; font-weight:700; }
+.readout.ro-ok .rvalue{ color:var(--fungsi); }
+.readout.ro-bad .rvalue{ color:var(--salah); }
+
+/* indikator warna per-modul */
+[data-mod="relasi"]{ --mod-accent:var(--relasi); --mod-soft:var(--relasi-soft); }
+[data-mod="fungsi"]{ --mod-accent:var(--fungsi); --mod-soft:var(--fungsi-soft); }
+
+/* ============================================================
+   5. DIAGRAM PANAH (dipakai lintas tahap)
+   ============================================================ */
+.diagram-wrap{
+  position:relative; display:flex; justify-content:space-between; align-items:stretch;
+  gap:clamp(18px,8vw,70px); padding:18px 2px 10px;
+}
+.diagram-col{ display:flex; flex-direction:column; gap:11px; flex:1 1 0; min-width:0; max-width:50%; }
+.diagram-col-title{ font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.diagram-col--codomain{ align-items:flex-end; }
+.diagram-col--codomain .diagram-col-title{ text-align:right; }
+
+.dnode{
+  display:inline-flex; align-items:center; gap:7px; max-width:100%;
+  background:var(--paper); border:2px solid var(--line-strong); border-radius:var(--radius-pill);
+  padding:6px 13px 6px 9px; font-weight:700; font-size:clamp(11.5px,2.5vw,13.5px); transition:all .2s ease;
+}
+.diagram-col--codomain .dnode{ padding:6px 9px 6px 13px; }
+.dnode .lbl{ overflow-wrap:anywhere; }
+.dnode .dot{ width:10px; height:10px; border-radius:50%; background:var(--ink); flex-shrink:0; }
+.dnode.is-hoverable{ cursor:pointer; }
+.dnode.is-hoverable:hover, .dnode.is-active{ border-color:var(--mod-accent); background:var(--mod-soft); }
+.dnode.is-active .dot{ background:var(--mod-accent); }
+.dnode.is-flagged{ border-color:var(--salah); background:var(--salah-soft); }
+.dnode.is-flagged .dot{ background:var(--salah); }
+.dnode.is-selected{ border-color:var(--korespondensi); background:var(--korespondensi-soft); box-shadow:0 0 0 3px var(--korespondensi-soft); }
+.dnode.is-ghost{ opacity:.4; border-style:dashed; }
+.dnode:disabled{ cursor:default; }
+
+svg.diagram-lines{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:1; }
+svg.diagram-lines path{ fill:none; stroke:var(--ink-faint); stroke-width:2.25; transition:stroke .25s ease, stroke-width .25s ease, opacity .25s ease; }
+svg.diagram-lines path.line-ok{ stroke:var(--fungsi); stroke-width:2.75; }
+svg.diagram-lines path.line-bad{ stroke:var(--salah); stroke-width:2.75; }
+svg.diagram-lines path.line-accent{ stroke:var(--mod-accent); stroke-width:2.75; }
+svg.diagram-lines path.line-ghost{ stroke:var(--ink-faint); stroke-width:1.75; stroke-dasharray:4 4; opacity:.55; }
+.diagram-col, .dnode{ position:relative; z-index:2; }
+
+.diagram-card{ background:var(--card); border:1.5px solid var(--line); border-radius:var(--radius-lg); padding:clamp(14px,3.4vw,22px); }
+.diagram-card-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px; flex-wrap:wrap; }
+.diagram-card-head h4{ font-size:13px; font-family:var(--font-mono); font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; }
+
+/* ============================================================
+   6. ISIAN, SERET-LEPAS, COCOKKAN (dipakai di tahap tantangan)
+   ============================================================ */
+.fill-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.fill-row input[type=text]{
+  border:2px solid var(--line-strong); border-radius:var(--radius-md); padding:10px 15px;
+  font-family:var(--font-mono); font-weight:700; font-size:14.5px; min-width:120px; flex:1 1 150px; background:var(--card);
+}
+.fill-row input[type=text]:focus{ border-color:var(--mod-accent); }
+.fill-row input.is-correct{ border-color:var(--benar); background:var(--benar-soft); }
+.fill-row input.is-wrong{ border-color:var(--salah); background:var(--salah-soft); }
+
+.dnd-pool{ display:flex; flex-wrap:wrap; gap:10px; padding:6px 2px; }
+.dnd-card{
+  touch-action:none; user-select:none; cursor:grab;
+  background:var(--card); border:2px solid var(--line-strong); border-radius:var(--radius-md);
+  padding:10px 14px; font-weight:700; font-size:12.5px; box-shadow:0 2px 6px rgba(22,33,62,.08);
+}
+.dnd-card:active{ cursor:grabbing; }
+.dnd-card.is-flying{ position:fixed; z-index:200; pointer-events:none; box-shadow:var(--shadow-pop); transition:none; }
+.dnd-card.is-picked{ border-color:var(--korespondensi); background:var(--korespondensi-soft); box-shadow:0 0 0 3px var(--korespondensi-soft); }
+.dnd-bins{ display:grid; gap:12px; grid-template-columns:1fr; margin-top:10px; }
+@media (min-width:520px){ .dnd-bins{ grid-template-columns:1fr 1fr; } }
+.dnd-bin{ border:2.5px dashed var(--line-strong); border-radius:var(--radius-lg); padding:14px; min-height:100px; display:flex; flex-direction:column; gap:9px; transition:all .18s ease; }
+.dnd-bin:focus-visible{ outline:3px solid var(--korespondensi); outline-offset:2px; }
+.dnd-bin-head{ display:flex; align-items:center; gap:7px; font-weight:700; font-size:13px; }
+.dnd-bin-head .sw{ width:11px; height:11px; border-radius:50%; }
+.dnd-bin.bin-yes .dnd-bin-head .sw{ background:var(--fungsi); }
+.dnd-bin.bin-no .dnd-bin-head .sw{ background:var(--salah); }
+.dnd-bin.is-over{ border-style:solid; background:var(--mod-soft); border-color:var(--mod-accent); }
+.dnd-bin .dnd-slot{ display:flex; flex-wrap:wrap; gap:8px; min-height:38px; }
+.dnd-card.placed-ok{ border-color:var(--benar); background:var(--benar-soft); cursor:default; }
+.dnd-card.placed-bad{ border-color:var(--salah); background:var(--salah-soft); cursor:default; }
+
+.match-wrap{ position:relative; display:flex; justify-content:space-between; gap:clamp(24px,10vw,90px); padding:6px 2px 2px; }
+.match-col{ display:flex; flex-direction:column; gap:10px; flex:1; max-width:48%; }
+.match-item{ text-align:left; border:2px solid var(--line-strong); border-radius:var(--radius-md); padding:10px 14px; font-weight:700; font-size:clamp(12px,2.2vw,13.5px); background:var(--card); position:relative; z-index:2; display:flex; align-items:center; gap:9px; width:100%; }
+.match-item .mdot{ width:9px; height:9px; border-radius:50%; background:var(--line-strong); flex-shrink:0; }
+.match-item.is-selected{ border-color:var(--korespondensi); background:var(--korespondensi-soft); }
+.match-item.is-selected .mdot{ background:var(--korespondensi); }
+.match-item.is-matched{ border-color:var(--benar); background:var(--benar-soft); cursor:default; }
+.match-item.is-matched .mdot{ background:var(--benar); }
+.match-item.is-shake{ animation:shake .4s ease; }
+@keyframes shake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+svg.match-lines{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:1; }
+svg.match-lines path{ fill:none; stroke:var(--benar); stroke-width:2.5; }
+
+@keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+.view{ display:none; }
+.view.is-active{ display:block; animation:fadeIn .4s ease; }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.site-footer{ border-top:1.5px solid var(--line); padding-block:26px; margin-top:10px; }
+.site-footer .wrap{ display:flex; flex-direction:column; gap:5px; align-items:center; text-align:center; }
+.site-footer p{ font-size:12px; color:var(--ink-faint); font-family:var(--font-mono); }
+
+/* ============================================================
+   7. HIASAN & ANIMASI
+   ============================================================ */
+.floaty-layer{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.floaty{ position:absolute; border-radius:50%; opacity:.4; filter:blur(.5px); animation:floatDrift ease-in-out infinite alternate; }
+@keyframes floatDrift{ 0%{ transform:translate(0,0) scale(1); } 100%{ transform:translate(var(--fx,22px), var(--fy,-26px)) scale(1.12); } }
+
+.confetti-piece{ position:fixed; z-index:400; pointer-events:none; border-radius:2px; top:0; left:0; will-change:transform,opacity; animation:confettiFall var(--dur,1s) cubic-bezier(.15,.6,.4,1) forwards; }
+@keyframes confettiFall{
+  0%{ transform:translate(0,0) rotate(0deg); opacity:1; }
+  100%{ transform:translate(var(--dx,0px), var(--dy,140px)) rotate(var(--rot,360deg)); opacity:0; }
+}
+
+@keyframes nodePop{ 0%{ transform:scale(.35); opacity:0; } 65%{ transform:scale(1.1); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
+.dnode{ animation:nodePop .42s cubic-bezier(.34,1.56,.64,1) backwards; animation-delay:calc(var(--i,0) * 65ms); }
+
+@keyframes cardIn{ from{ opacity:0; transform:translateY(16px) scale(.97); } to{ opacity:1; transform:translateY(0) scale(1); } }
+.module-card{ animation:cardIn .5s cubic-bezier(.22,1,.36,1) backwards; animation-delay:calc(var(--i,0) * 100ms); }
+.module-card{ transition:transform .22s ease, box-shadow .22s ease; }
+.module-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-pop); }
+
+@keyframes reflectPop{ from{ opacity:0; transform:translateY(8px) scale(.97); } to{ opacity:1; transform:translateY(0) scale(1); } }
+.reflection-pop{ animation:reflectPop .4s cubic-bezier(.34,1.56,.64,1); }
+
+.reflect-modal-overlay{
+  position:fixed; inset:0; z-index:500; background:rgba(22,33,62,.55);
+  display:none; align-items:center; justify-content:center; padding:20px;
+  backdrop-filter:blur(2px);
+}
+.reflect-modal-overlay.is-open{ display:flex; }
+.reflect-modal{
+  background:var(--card); border-radius:var(--radius-lg); padding:clamp(22px,4vw,30px);
+  max-width:460px; width:100%; box-shadow:var(--shadow-pop);
+  animation:reflectModalPop .35s cubic-bezier(.34,1.56,.64,1);
+  border:1.5px solid var(--mod-accent); max-height:82vh; overflow-y:auto;
+}
+@keyframes reflectModalPop{ from{ opacity:0; transform:scale(.9) translateY(14px); } to{ opacity:1; transform:scale(1) translateY(0); } }
+.reflect-modal .eyebrow{ color:var(--mod-accent); display:flex; align-items:center; gap:6px; margin-bottom:12px; }
+.reflect-modal p{ font-size:14.5px; line-height:1.6; margin-bottom:22px; }
+.reflect-modal .btn{ width:100%; }
+
+@keyframes fbPop{ 0%{ transform:scale(.97); } 55%{ transform:scale(1.015); } 100%{ transform:scale(1); } }
+
+.stage-dot.is-done{ animation:dotPop .5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes dotPop{ 0%{ transform:scale(1); } 45%{ transform:scale(1.65); } 100%{ transform:scale(1); } }
+
+.brand-mark i{ animation:mascotBlink 4.5s ease-in-out infinite; }
+.brand-mark i:nth-child(2){ animation-delay:.12s; }
+@keyframes mascotBlink{ 0%,88%,100%{ transform:scaleY(1); } 94%{ transform:scaleY(.15); } }
+.brand-mark.is-celebrating{ animation:mascotJump .7s ease; }
+@keyframes mascotJump{ 0%,100%{ transform:translateY(0) rotate(0deg); } 25%{ transform:translateY(-9px) rotate(-10deg); } 55%{ transform:translateY(0) rotate(8deg); } 80%{ transform:translateY(-4px) rotate(-4deg); } }
+
+.btn:active:not(:disabled){ transform:translateY(0) scale(.95); }
+.opt:active:not(:disabled){ transform:scale(.98); }
+.dnode.is-hoverable:active{ transform:scale(.96); }
+
+</style>
+</head>
+<body>
+<div class="grid-texture" aria-hidden="true"></div>
+<div class="floaty-layer" aria-hidden="true">
+  <span class="floaty" style="top:8%;left:6%;width:64px;height:64px;background:var(--relasi-soft);animation-duration:7.5s;--fx:18px;--fy:-22px;"></span>
+  <span class="floaty" style="top:16%;right:9%;width:42px;height:42px;background:var(--fungsi-soft);animation-duration:9s;animation-delay:.6s;--fx:-16px;--fy:20px;"></span>
+  <span class="floaty" style="top:46%;left:3%;width:30px;height:30px;background:var(--korespondensi-soft);animation-duration:6.2s;animation-delay:1.4s;--fx:14px;--fy:16px;"></span>
+  <span class="floaty" style="top:62%;right:6%;width:52px;height:52px;background:var(--relasi-soft);animation-duration:8.4s;animation-delay:.3s;--fx:-20px;--fy:-14px;"></span>
+  <span class="floaty" style="top:78%;left:14%;width:24px;height:24px;background:var(--fungsi-soft);animation-duration:5.6s;animation-delay:1.8s;--fx:12px;--fy:-18px;"></span>
+  <span class="floaty" style="top:32%;right:23%;width:20px;height:20px;background:var(--korespondensi-soft);animation-duration:7.8s;animation-delay:2.4s;--fx:-10px;--fy:14px;"></span>
+  <span class="floaty" style="top:88%;right:34%;width:36px;height:36px;background:var(--relasi-soft);animation-duration:6.9s;animation-delay:2s;--fx:16px;--fy:-12px;"></span>
+</div>
+
+<div class="reflect-modal-overlay" id="reflectModalOverlay" role="dialog" aria-modal="true" aria-label="Refleksi">
+  <div class="reflect-modal">
+    <span class="eyebrow">✨ Refleksi</span>
+    <p id="reflectModalText"></p>
+    <button class="btn btn-accent" id="reflectModalClose" type="button">Tutup, lanjutkan →</button>
+  </div>
+</div>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <button class="home-link" id="homeBtn" aria-label="Kembali ke beranda">
+        <span class="brand-mark"><i></i><i></i></span>
+      </button>
+      <span id="topbarTitle">BAB 4 · RELASI &amp; FUNGSI</span>
+    </div>
+  </div>
+  <div class="stage-dots-row" id="stageDotsRow"></div>
+  <div class="overall-progress-row" id="overallRow"><i id="overallRowFill"></i></div>
+</nav>
+
+<main>
+<!-- ============================================================
+     LAYAR MULAI & IDENTITAS SISWA
+     ============================================================ -->
+<section class="view is-active" id="startView">
+  <div class="wrap start-shell">
+    <div class="start-card">
+      <span class="eyebrow">📘 BAB 4 · MATEMATIKA KELAS 8</span>
+      <h1>Siap belajar Relasi &amp; Fungsi?</h1>
+      <p>Sebelum mulai, isi identitasmu. Identitas, jawaban latihan, dan semua refleksi yang kamu tulis akan dicantumkan pada PDF hasil belajarmu.</p>
+      <button class="btn btn-accent" id="startCta" type="button">Mulai belajar →</button>
+
+      <form class="start-form" id="studentForm" hidden novalidate>
+        <div class="start-form-head">
+          <h2>Isi identitasmu dulu</h2>
+          <p>Lengkapi data berikut sebelum masuk ke latihan.</p>
+        </div>
+        <div class="student-fields">
+          <div class="student-field">
+            <label for="studentName">Nama lengkap</label>
+            <input id="studentName" name="studentName" type="text" autocomplete="name" placeholder="Contoh: Nabila Putri" required>
+          </div>
+          <div class="student-field">
+            <label for="studentAttendance">Nomor absen</label>
+            <input id="studentAttendance" name="studentAttendance" type="text" inputmode="numeric" placeholder="Contoh: 12" required>
+          </div>
+          <div class="student-field">
+            <label for="studentClass">Kelas</label>
+            <input id="studentClass" name="studentClass" type="text" autocomplete="off" placeholder="Contoh: 8A" required>
+          </div>
+        </div>
+        <p class="form-error" id="studentError" role="alert" aria-live="polite"></p>
+        <button class="btn btn-accent" type="submit">Simpan &amp; mulai latihan →</button>
+        <p class="session-note">Data disimpan di perangkat ini selama halaman belajar tetap terbuka.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BERANDA · daftar modul latihan
+     ============================================================ -->
+<section class="view" id="homeView">
+  <div class="wrap">
+    <div class="home-hero">
+      <span class="eyebrow">🔗 BAB 4 · MATEMATIKA KELAS 8</span>
+      <h1>Latihan Relasi &amp; Fungsi</h1>
+      <p>Dua modul latihan singkat. Tiap tahap langsung mengajakmu mencoba, ketuk, hubungkan, dan geser, lalu kamu akan mendapat umpan balik langsung.</p>
+    </div>
+
+    <div class="overall-card">
+      <span>PROGRES</span>
+      <div class="track"><i id="overallFill"></i></div>
+      <b id="overallPct">0%</b>
+    </div>
+
+    <div class="alldone-banner is-hidden" id="allDoneBanner">
+      <span class="ico">🎉</span>
+      <div class="alldone-copy"><h3>Semua modul selesai!</h3><p>Jawaban latihan dan refleksimu siap dijadikan PDF. Unduh dan simpan hasil belajarmu.</p></div>
+      <button class="btn pdf-download-btn" id="downloadPdfBtn" type="button">Unduh PDF jawaban</button>
+    </div>
+
+    <div class="module-grid" id="moduleGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TAMPILAN MODUL / TAHAP (diisi JS)
+     ============================================================ -->
+<section class="view" id="moduleView">
+  <div class="wrap">
+    <div class="stage-prompt">
+      <span class="eyebrow" id="stageEyebrow"></span>
+      <h2 id="stageTitle"></h2>
+      <p class="stage-sub" id="stageSub"></p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-visual" id="stageVisual"></div>
+      <div class="stage-controls" id="stageControls"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-ghost" id="navBack">← Kembali</button>
+      <button class="btn btn-accent" id="navNext" disabled>Lanjut →</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>LAB RELASI &amp; FUNGSI · MATEMATIKA SMP KELAS 8 · BAB 4</p>
+    <p>Latihan mandiri. Progres dan jawaban tersimpan selama sesi ini berlangsung.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const SVGNS = "http://www.w3.org/2000/svg";
+
+/* ============================================================
+   UTILITAS DASAR
+   ============================================================ */
+function $(sel, root){ return (root||document).querySelector(sel); }
+function $all(sel, root){ return Array.from((root||document).querySelectorAll(sel)); }
+function el(tag, cls, text){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(text!==undefined) e.textContent = text;
+  return e;
+}
+function debounce(fn, wait){ let t; return function(...a){ clearTimeout(t); t=setTimeout(()=>fn.apply(this,a), wait); }; }
+
+/* ============================================================
+   REGISTRI GAMBAR ULANG DIAGRAM
+   ============================================================ */
+const redrawRegistry = [];
+function registerRedraw(anchorEl, fn){
+  const idx = redrawRegistry.findIndex(r=>r.anchorEl===anchorEl);
+  if(idx>=0) redrawRegistry.splice(idx,1);
+  redrawRegistry.push({ anchorEl, fn });
+}
+function redrawAllVisible(){
+  redrawRegistry.forEach(({anchorEl, fn})=>{
+    if(anchorEl && anchorEl.offsetParent !== null){ try{ fn(); }catch(err){} }
+  });
+}
+window.addEventListener("resize", debounce(redrawAllVisible, 130));
+window.addEventListener("orientationchange", ()=> setTimeout(redrawAllVisible, 220));
+
+function pathBetween(svg, containerRect, fromDot, toDot, cls, animate){
+  const r1 = fromDot.getBoundingClientRect(), r2 = toDot.getBoundingClientRect();
+  const x1 = r1.left+r1.width/2-containerRect.left, y1 = r1.top+r1.height/2-containerRect.top;
+  const x2 = r2.left+r2.width/2-containerRect.left, y2 = r2.top+r2.height/2-containerRect.top;
+  const mx = (x1+x2)/2;
+  const p = document.createElementNS(SVGNS, "path");
+  p.setAttribute("d", "M "+x1+" "+y1+" C "+mx+" "+y1+", "+mx+" "+y2+", "+x2+" "+y2);
+  if(cls) p.setAttribute("class", cls);
+  svg.appendChild(p);
+  if(animate){
+    try{
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+      p.getBoundingClientRect();
+      p.style.transition = "stroke-dashoffset .5s cubic-bezier(.4,0,.2,1)";
+      requestAnimationFrame(()=>{ p.style.strokeDashoffset = "0"; });
+    }catch(err){}
+  }
+  return p;
+}
+
+/* ============================================================
+   KOMPONEN: DIAGRAM PANAH
+   cfg = { domainTitle, codomainTitle, domain:[label], codomain:[label],
+           pairs:[[dIdx,cIdx,cls]], interactive, onNodeClick(side,idx,el) }
+   ============================================================ */
+function buildDiagram(container, cfg){
+  container.innerHTML = "";
+  container.classList.add("diagram-wrap");
+  const colD = el("div","diagram-col diagram-col--domain");
+  colD.appendChild(el("div","diagram-col-title", cfg.domainTitle || "Himpunan A"));
+  const colC = el("div","diagram-col diagram-col--codomain");
+  colC.appendChild(el("div","diagram-col-title", cfg.codomainTitle || "Himpunan B"));
+  const svg = document.createElementNS(SVGNS,"svg");
+  svg.setAttribute("class","diagram-lines");
+
+  const dNodes=[], cNodes=[];
+  cfg.domain.forEach((label,i)=>{
+    const n = el("button","dnode"); n.type="button";
+    n.dataset.side="d"; n.dataset.idx=i;
+    n.style.setProperty("--i", i);
+    if(!cfg.interactive) n.disabled = true;
+    n.appendChild(el("span","lbl",label)); n.appendChild(el("span","dot"));
+    colD.appendChild(n); dNodes.push(n);
+  });
+  cfg.codomain.forEach((label,i)=>{
+    const n = el("button","dnode"); n.type="button";
+    n.dataset.side="c"; n.dataset.idx=i;
+    n.style.setProperty("--i", i);
+    if(!cfg.interactive) n.disabled = true;
+    n.appendChild(el("span","dot")); n.appendChild(el("span","lbl",label));
+    colC.appendChild(n); cNodes.push(n);
+  });
+  container.appendChild(colD); container.appendChild(svg); container.appendChild(colC);
+
+  function draw(animate){
+    svg.innerHTML = "";
+    const rect = container.getBoundingClientRect();
+    (cfg.pairs||[]).forEach(pr=>{
+      const dEl=dNodes[pr[0]], cEl=cNodes[pr[1]];
+      if(!dEl||!cEl) return;
+      pathBetween(svg, rect, dEl.querySelector(".dot"), cEl.querySelector(".dot"), pr[2]||"", animate);
+    });
+  }
+  if(cfg.interactive && cfg.onNodeClick){
+    [...dNodes, ...cNodes].forEach(n=> n.addEventListener("click", ()=> cfg.onNodeClick(n.dataset.side, Number(n.dataset.idx), n)));
+  }
+  registerRedraw(container, ()=>draw(false));
+  requestAnimationFrame(()=>draw(true));
+  setTimeout(()=>draw(false), 560);
+  return { dNodes, cNodes, draw };
+}
+
+/* ============================================================
+   UMPAN BALIK (feedback-banner)
+   ============================================================ */
+function setFeedback(bannerEl, opts){
+  bannerEl.className = "feedback-banner fb-" + (opts.state || "idle");
+  bannerEl.innerHTML = "";
+  const icoMap = { idle:"👉", success:"✅", error:"🤔", hint:"💡" };
+  bannerEl.appendChild(el("span","fb-ico", icoMap[opts.state] || "👉"));
+  bannerEl.appendChild(el("span","", opts.message || ""));
+  bannerEl.style.animation = "none";
+  void bannerEl.offsetWidth;
+  bannerEl.style.animation = "fbPop .35s ease";
+}
+function roundPipsHTML(current, total){
+  let out = '<div class="round-pips">';
+  for(let i=0;i<total;i++) out += `<span class="round-pip${i<current?' is-done':i===current?' is-current':''}"></span>`;
+  return out + '</div>';
+}
+
+const CONFETTI_COLORS = ["#FF6A3D","#12946B","#7C5CFC","#FFC93C","#FF4D8D","#2FB8E0"];
+function burstConfetti(originEl, count){
+  if(!originEl || !originEl.getBoundingClientRect) return;
+  count = count || 18;
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+  const frag = document.createDocumentFragment();
+  const pieces = [];
+  for(let i=0;i<count;i++){
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    const w = 5 + Math.random()*5, h = w*0.4 + Math.random()*4;
+    const angle = Math.random()*Math.PI*2;
+    const dist = 55 + Math.random()*100;
+    piece.style.width = w+"px";
+    piece.style.height = h+"px";
+    piece.style.background = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+    piece.style.left = (cx-w/2)+"px";
+    piece.style.top = (cy-h/2)+"px";
+    piece.style.setProperty("--dx", (Math.cos(angle)*dist).toFixed(0)+"px");
+    piece.style.setProperty("--dy", (Math.sin(angle)*dist + 50).toFixed(0)+"px");
+    piece.style.setProperty("--rot", (Math.random()*640-320).toFixed(0)+"deg");
+    piece.style.setProperty("--dur", (0.75+Math.random()*0.5).toFixed(2)+"s");
+    frag.appendChild(piece);
+    pieces.push(piece);
+  }
+  document.body.appendChild(frag);
+  setTimeout(()=>{ pieces.forEach(p=>p.remove()); }, 1500);
+}
+
+function animateNumber(el, from, to, duration){
+  duration = duration || 700;
+  const start = performance.now();
+  function tick(now){
+    const t = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-t, 3);
+    const val = Math.round(from + (to-from)*eased);
+    el.textContent = val + "%";
+    if(t < 1) requestAnimationFrame(tick);
+    else el.textContent = to + "%";
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ============================================================
+   MODAL POP-UP REFLEKSI, dipakai setelah jawaban benar,
+   harus ditutup lewat tombol agar siswa membacanya dulu.
+   ============================================================ */
+function showReflectModal(text, onClose){
+  const overlay = $("#reflectModalOverlay");
+  $("#reflectModalText").textContent = text;
+  overlay.classList.add("is-open");
+  const modalCard = overlay.querySelector(".reflect-modal");
+  setTimeout(()=> burstConfetti(modalCard, 14), 120);
+  const closeBtn = $("#reflectModalClose");
+  function handler(){
+    overlay.classList.remove("is-open");
+    closeBtn.removeEventListener("click", handler);
+    if(onClose) onClose();
+  }
+  closeBtn.addEventListener("click", handler);
+}
+
+/* ============================================================
+   KOMPONEN BERSAMA: PILIHAN GANDA/BENAR-SALAH (bentuk ronde)
+   opts: { text, correct, note }. Jawaban benar → buka modal
+   refleksi; onAdvance dipanggil setelah modal ditutup.
+   ============================================================ */
+function renderChoiceRound(container, options, feedbackEl, reflectionText, onAdvance, answerMeta){
+  container.innerHTML = "";
+  const list = el("div","opt-list");
+  options.forEach((opt)=>{
+    const b = el("button","opt"); b.type="button";
+    b.appendChild(el("span","optmark"));
+    b.appendChild(el("span","",opt.text));
+    b.addEventListener("click", ()=>{
+      if(opt.correct){
+        b.classList.add("is-correct");
+        $all(".opt", list).forEach(o=>o.disabled=true);
+        recordStudentAnswer(answerMeta, opt.text);
+        setFeedback(feedbackEl, { state:"success", message: opt.note || "Tepat sekali!" });
+        showReflectModal(reflectionText, onAdvance);
+      } else {
+        b.classList.add("is-wrong"); b.disabled = true;
+        setFeedback(feedbackEl, { state:"error", message: opt.note || "Belum tepat, coba opsi lain." });
+      }
+    });
+    list.appendChild(b);
+  });
+  container.appendChild(list);
+}
+
+/* ============================================================
+   KOMPONEN BERSAMA: ISIAN SINGKAT
+   ============================================================ */
+function normFill(s){ return String(s).toLowerCase().replace(/[{}\s]/g,""); }
+function checkFillAnswer(raw, q){
+  if(q.parseAsSet){
+    const got = raw.replace(/[{}\s]/g,"").split(",").filter(Boolean).map(Number).filter(n=>!isNaN(n)).sort((a,b)=>a-b).join(",");
+    const want = q.acceptedSet.slice().sort((a,b)=>a-b).join(",");
+    return got.length>0 && got===want;
+  }
+  const n = normFill(raw);
+  return q.accepted.some(a=>normFill(a)===n);
+}
+function renderFillRound(container, q, feedbackEl, onResolved, answerMeta){
+  container.innerHTML = "";
+  const row = el("div","fill-row");
+  const input = document.createElement("input");
+  input.type="text"; input.placeholder = q.placeholder || "Jawabanmu..."; input.autocomplete="off"; input.spellcheck=false;
+  const btn = el("button","btn btn-ghost","Periksa"); btn.type="button";
+  row.appendChild(input); row.appendChild(btn);
+  container.appendChild(row);
+  function check(){
+    const raw = input.value.trim();
+    if(!raw) return;
+    const ok = checkFillAnswer(raw, q);
+    if(ok){
+      input.classList.remove("is-wrong"); input.classList.add("is-correct");
+      input.disabled = true; btn.disabled = true;
+      recordStudentAnswer(answerMeta, raw);
+      setFeedback(feedbackEl, { state:"success", message: q.fbOk || "Tepat sekali!" });
+      onResolved(true);
+    } else {
+      input.classList.add("is-wrong");
+      setFeedback(feedbackEl, { state:"error", message: q.fbBad || "Belum tepat, coba lagi." });
+    }
+  }
+  btn.addEventListener("click", check);
+  input.addEventListener("keydown", (e)=>{ if(e.key==="Enter"){ e.preventDefault(); check(); } });
+}
+
+/* ============================================================
+   KOMPONEN BERSAMA: MENCOCOKKAN PASANGAN
+   ============================================================ */
+function renderMatchRound(container, q, feedbackEl, onResolved){
+  container.innerHTML = "";
+  const wrap = el("div","match-wrap");
+  const colL = el("div","match-col"), colR = el("div","match-col");
+  const svg = document.createElementNS(SVGNS,"svg"); svg.setAttribute("class","match-lines");
+  const leftBtns=[], rightBtns=[];
+  let selectedLeft=null, matchedCount=0;
+  const total = q.pairs.length;
+
+  q.left.forEach((txt,i)=>{
+    const b = el("button","match-item"); b.type="button";
+    b.appendChild(el("span","",txt)); b.appendChild(el("span","mdot"));
+    b.addEventListener("click", ()=>{
+      if(b.classList.contains("is-matched")) return;
+      leftBtns.forEach(x=>x.classList.remove("is-selected"));
+      selectedLeft = i; b.classList.add("is-selected");
+    });
+    colL.appendChild(b); leftBtns.push(b);
+  });
+  q.right.forEach((txt,i)=>{
+    const b = el("button","match-item"); b.type="button";
+    b.appendChild(el("span","mdot")); b.appendChild(el("span","",txt));
+    b.addEventListener("click", ()=>{
+      if(b.classList.contains("is-matched") || selectedLeft===null) return;
+      const isCorrect = q.pairs.some(p=>p[0]===selectedLeft && p[1]===i);
+      const chosen = selectedLeft;
+      if(isCorrect){
+        leftBtns[chosen].classList.remove("is-selected"); leftBtns[chosen].classList.add("is-matched");
+        b.classList.add("is-matched"); matchedCount++; selectedLeft=null;
+        drawLine(chosen, i, true);
+        if(matchedCount===total){
+          setFeedback(feedbackEl, { state:"success", message: q.fbOk || "Semua pasangan tepat!" });
+          onResolved(true);
+        }
+      } else {
+        [b, leftBtns[chosen]].forEach(x=>{ x.classList.add("is-shake"); setTimeout(()=>x.classList.remove("is-shake"),400); });
+        setFeedback(feedbackEl, { state:"error", message: q.fbBad || "Belum pas, coba lagi." });
+      }
+    });
+    colR.appendChild(b); rightBtns.push(b);
+  });
+  function drawLine(li,ri,animate){
+    const rect = wrap.getBoundingClientRect();
+    pathBetween(svg, rect, leftBtns[li].querySelector(".mdot"), rightBtns[ri].querySelector(".mdot"), "line-ok", animate);
+  }
+  function redraw(){
+    svg.innerHTML = "";
+    q.pairs.forEach(p=>{ if(leftBtns[p[0]] && leftBtns[p[0]].classList.contains("is-matched")) drawLine(p[0],p[1]); });
+  }
+  wrap.appendChild(colL); wrap.appendChild(svg); wrap.appendChild(colR);
+  container.appendChild(wrap);
+  registerRedraw(wrap, redraw);
+}
+
+/* ============================================================
+   KOMPONEN BERSAMA: SERET & LEPAS (klasifikasi 2 kotak)
+   ============================================================ */
+let dndPickedCard = null;
+function attachDragPointer(cardEl, zones, onDrop){
+  cardEl.addEventListener("pointerdown", (e)=>{
+    if(cardEl.classList.contains("placed-ok")) return;
+    e.preventDefault();
+    const origParent = cardEl.parentElement;
+    const rect = cardEl.getBoundingClientRect();
+    const offsetX = e.clientX-rect.left, offsetY = e.clientY-rect.top;
+    try{ cardEl.setPointerCapture(e.pointerId); }catch(err){}
+    cardEl.classList.add("is-flying");
+    cardEl.style.width = rect.width+"px"; cardEl.style.left = rect.left+"px"; cardEl.style.top = rect.top+"px";
+    function move(ev){
+      cardEl.style.left = (ev.clientX-offsetX)+"px"; cardEl.style.top = (ev.clientY-offsetY)+"px";
+      zones.forEach(z=>{
+        const zr = z.wrap.getBoundingClientRect();
+        const over = ev.clientX>=zr.left && ev.clientX<=zr.right && ev.clientY>=zr.top && ev.clientY<=zr.bottom;
+        z.wrap.classList.toggle("is-over", over);
+      });
+    }
+    function up(ev){
+      try{ cardEl.releasePointerCapture(ev.pointerId); }catch(err){}
+      cardEl.removeEventListener("pointermove", move); cardEl.removeEventListener("pointerup", up);
+      cardEl.classList.remove("is-flying");
+      cardEl.style.position=""; cardEl.style.left=""; cardEl.style.top=""; cardEl.style.width="";
+      let dropped = null;
+      zones.forEach(z=>{
+        const zr = z.wrap.getBoundingClientRect();
+        z.wrap.classList.remove("is-over");
+        if(ev.clientX>=zr.left && ev.clientX<=zr.right && ev.clientY>=zr.top && ev.clientY<=zr.bottom) dropped = z;
+      });
+      if(dropped){ dropped.slot.appendChild(cardEl); } else { origParent.appendChild(cardEl); }
+      onDrop(dropped);
+    }
+    cardEl.addEventListener("pointermove", move);
+    cardEl.addEventListener("pointerup", up);
+  });
+}
+function renderDndRound(container, q, feedbackEl, onResolved){
+  container.innerHTML = "";
+  const wrap = el("div","");
+  wrap.appendChild(el("p","reflect-hint","Seret tiap kartu ke kotak yang sesuai. Keyboard: Enter pada kartu, lalu Enter pada kotak."));
+  const pool = el("div","dnd-pool");
+  const bins = el("div","dnd-bins");
+  function makeBin(key,label,extraCls){
+    const w = el("div","dnd-bin "+extraCls);
+    w.tabIndex=0; w.setAttribute("role","button"); w.setAttribute("aria-label","Kotak: "+label);
+    const head = el("div","dnd-bin-head"); head.appendChild(el("span","sw")); head.appendChild(el("span","",label));
+    const slot = el("div","dnd-slot");
+    w.appendChild(head); w.appendChild(slot);
+    return { wrap:w, slot, key };
+  }
+  const binYes = makeBin("yes", q.binLabels.yes, "bin-yes");
+  const binNo = makeBin("no", q.binLabels.no, "bin-no");
+  const zones = [binYes, binNo];
+  bins.appendChild(binYes.wrap); bins.appendChild(binNo.wrap);
+  let placedCorrect = 0; const total = q.items.length;
+
+  function handleDrop(cardEl, item, dropZone){
+    if(!dropZone || cardEl.classList.contains("placed-ok")) return;
+    const correct = dropZone.key === item.bin;
+    if(correct){
+      cardEl.classList.remove("placed-bad"); cardEl.classList.add("placed-ok");
+      placedCorrect++;
+      if(placedCorrect===total){ setFeedback(feedbackEl, {state:"success", message:q.fbOk||"Semua tepat!"}); onResolved(true); }
+    } else {
+      cardEl.classList.add("placed-bad");
+      setFeedback(feedbackEl, { state:"error", message: item.note || q.fbBad || "Coba lagi." });
+      setTimeout(()=>{ if(cardEl.classList.contains("placed-bad")){ cardEl.classList.remove("placed-bad"); pool.appendChild(cardEl); } }, 950);
+    }
+  }
+  q.items.forEach((item)=>{
+    const c = el("button","dnd-card", item.label); c.type="button"; c.dataset.bin=item.bin; c._itemRef=item;
+    pool.appendChild(c);
+    attachDragPointer(c, zones, (dz)=>handleDrop(c, item, dz));
+    c.addEventListener("keydown", (e)=>{
+      if(e.key!=="Enter" && e.key!==" ") return;
+      e.preventDefault();
+      if(c.classList.contains("placed-ok")) return;
+      if(dndPickedCard===c){ c.classList.remove("is-picked"); dndPickedCard=null; }
+      else { if(dndPickedCard) dndPickedCard.classList.remove("is-picked"); dndPickedCard=c; c.classList.add("is-picked"); }
+    });
+  });
+  zones.forEach(z=>{
+    z.wrap.addEventListener("keydown", (e)=>{
+      if(e.key!=="Enter" && e.key!==" ") return;
+      e.preventDefault();
+      if(!dndPickedCard) return;
+      const cardEl = dndPickedCard; cardEl.classList.remove("is-picked"); dndPickedCard=null;
+      z.slot.appendChild(cardEl);
+      handleDrop(cardEl, cardEl._itemRef, z);
+    });
+  });
+  wrap.appendChild(pool); wrap.appendChild(bins);
+  container.appendChild(wrap);
+}
+
+/* ============================================================
+   KERANGKA APLIKASI: BERANDA & NAVIGASI MODUL/TAHAP
+   ============================================================ */
+const MODULES = {}; /* diisi di bagian bawah oleh tiap modul */
+const MODULE_ORDER = ["relasi","fungsi"];
+const MODULE_COLORS = {
+  relasi: { accent:"var(--relasi)", soft:"var(--relasi-soft)" },
+  fungsi: { accent:"var(--fungsi)", soft:"var(--fungsi-soft)" }
+};
+
+const STORAGE_KEY = "lab-relasi-fungsi-siswa-v1";
+const AppState = {
+  view:"start",
+  student:{ name:"", attendance:"", className:"" },
+  modules:{},
+  reflections:{ a3:"", relasiFinal:["", ""], fungsiFinal:["", ""] },
+  answers:{}
+};
+
+function textValue(value){ return typeof value === "string" ? value : ""; }
+function normalizeAnswerRecords(source){
+  if(!source || typeof source !== "object" || Array.isArray(source)) return {};
+  const records = {};
+  Object.keys(source).forEach(key=>{
+    const entry = source[key];
+    if(!entry || typeof entry !== "object" || Array.isArray(entry)) return;
+    const question = textValue(entry.question).trim();
+    const answer = textValue(entry.answer).trim();
+    if(!question && !answer) return;
+    records[key] = {
+      section:textValue(entry.section).trim() || "Latihan",
+      order:Number.isFinite(entry.order) ? entry.order : 999,
+      question,
+      answer
+    };
+  });
+  return records;
+}
+function recordStudentAnswer(meta, answer){
+  if(!meta || !textValue(meta.id).trim()) return;
+  AppState.answers[meta.id] = {
+    section:textValue(meta.section).trim() || "Latihan",
+    order:Number.isFinite(meta.order) ? meta.order : 999,
+    question:textValue(meta.question).trim(),
+    answer:textValue(answer).trim()
+  };
+  persistAppState();
+}
+function formatPairAnswer(domain, codomain, pairs){
+  return pairs.length
+    ? "{"+pairs.map(pair=>"("+domain[pair[0]]+", "+codomain[pair[1]]+")").join(", ")+"}"
+    : "Belum ada pasangan.";
+}
+function hasStudentIdentity(){
+  return Boolean(AppState.student.name.trim() && AppState.student.attendance.trim() && AppState.student.className.trim());
+}
+function isCourseCompleted(){ return totalStages()>0 && totalDone() === totalStages(); }
+
+function persistAppState(){
+  try{
+    const moduleSnapshot = {};
+    MODULE_ORDER.forEach(key=>{
+      const state = AppState.modules[key];
+      moduleSnapshot[key] = { stageIndex:state.stageIndex, done:[...state.done] };
+    });
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+      student:{ ...AppState.student },
+      modules:moduleSnapshot,
+      reflections:{
+        a3:AppState.reflections.a3,
+        relasiFinal:[...AppState.reflections.relasiFinal],
+        fungsiFinal:[...AppState.reflections.fungsiFinal]
+      },
+      answers:{ ...AppState.answers }
+    }));
+  } catch(err){
+    /* Penyimpanan sesi bersifat tambahan; latihan tetap dapat digunakan tanpa itu. */
+  }
+}
+
+function restoreAppState(){
+  try{
+    const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "null");
+    if(!saved || typeof saved !== "object") return;
+    const savedStudent = saved.student || {};
+    AppState.student.name = textValue(savedStudent.name);
+    AppState.student.attendance = textValue(savedStudent.attendance);
+    AppState.student.className = textValue(savedStudent.className);
+
+    const savedReflections = saved.reflections || {};
+    AppState.reflections.a3 = textValue(savedReflections.a3);
+    ["relasiFinal", "fungsiFinal"].forEach(key=>{
+      const savedAnswers = Array.isArray(savedReflections[key]) ? savedReflections[key] : [];
+      AppState.reflections[key] = [textValue(savedAnswers[0]), textValue(savedAnswers[1])];
+    });
+    AppState.answers = normalizeAnswerRecords(saved.answers);
+
+    MODULE_ORDER.forEach(key=>{
+      const savedModule = saved.modules && saved.modules[key];
+      if(!savedModule || typeof savedModule !== "object") return;
+      const done = Array.isArray(savedModule.done) ? savedModule.done : [];
+      AppState.modules[key].done = AppState.modules[key].done.map((_, index)=>Boolean(done[index]));
+      const savedIndex = Number.isInteger(savedModule.stageIndex) ? savedModule.stageIndex : 0;
+      AppState.modules[key].stageIndex = Math.max(0, Math.min(savedIndex, AppState.modules[key].done.length-1));
+    });
+  } catch(err){
+    /* Data sesi yang rusak diabaikan agar latihan selalu dapat dibuka. */
+  }
+}
+
+function initAppState(){
+  MODULE_ORDER.forEach(key=>{
+    AppState.modules[key] = { stageIndex:0, done: MODULES[key].stages.map(()=>false) };
+  });
+  AppState.reflections = { a3:"", relasiFinal:["", ""], fungsiFinal:["", ""] };
+  AppState.answers = {};
+  restoreAppState();
+}
+
+let $topbarTitle, $stageDotsRow, $overallRowFill, $stageVisual, $stageControls;
+
+function totalDone(){ return MODULE_ORDER.reduce((s,k)=> s + AppState.modules[k].done.filter(Boolean).length, 0); }
+function totalStages(){ return MODULE_ORDER.reduce((s,k)=> s + MODULES[k].stages.length, 0); }
+
+let allDoneCelebrated = false;
+function renderHome(){
+  const stagesTotal = totalStages();
+  const pct = stagesTotal ? Math.round((totalDone()/stagesTotal)*100) : 0;
+  const pctEl = $("#overallPct");
+  const prevPct = parseInt(pctEl.textContent, 10) || 0;
+  animateNumber(pctEl, prevPct, pct, 650);
+  $("#overallFill").style.width = pct+"%";
+  const isAllDone = isCourseCompleted();
+  $("#allDoneBanner").classList.toggle("is-hidden", !isAllDone);
+  $("#downloadPdfBtn").disabled = !isAllDone;
+  if(isAllDone && !allDoneCelebrated){
+    allDoneCelebrated = true;
+    setTimeout(()=>{ const banner = $("#allDoneBanner"); if(banner) burstConfetti(banner, 46); }, 350);
+  }
+
+  const grid = $("#moduleGrid");
+  grid.innerHTML = "";
+  MODULE_ORDER.forEach((key, idx)=>{
+    const mod = MODULES[key];
+    const state = AppState.modules[key];
+    const doneCount = state.done.filter(Boolean).length;
+    const colors = MODULE_COLORS[key];
+    const card = el("div","module-card");
+    card.style.setProperty("--card-accent", colors.accent);
+    card.style.setProperty("--card-soft", colors.soft);
+    card.style.setProperty("--i", idx);
+    const icon = el("div","mc-icon", mod.iconLetter);
+    card.appendChild(icon);
+    card.appendChild(el("h3","",mod.title));
+    card.appendChild(el("p","",mod.desc));
+    const track = el("div","track"); const fill = el("i","");
+    fill.style.width = (doneCount/mod.stages.length*100)+"%";
+    track.appendChild(fill); card.appendChild(track);
+    const foot = el("div","mc-foot");
+    foot.appendChild(el("span","mc-stagecount", doneCount+"/"+mod.stages.length+" tahap"));
+    const btn = el("button","btn btn-accent", doneCount===0 ? "Mulai" : doneCount===mod.stages.length ? "Ulangi" : "Lanjutkan");
+    btn.type="button";
+    btn.addEventListener("click", ()=> enterModule(key));
+    foot.appendChild(btn);
+    card.appendChild(foot);
+    grid.appendChild(card);
+  });
+}
+
+function goHome(){
+  if(!hasStudentIdentity()){
+    showStart();
+    return;
+  }
+  AppState.view = "home";
+  $("#startView").classList.remove("is-active");
+  $("#homeView").classList.add("is-active");
+  $("#moduleView").classList.remove("is-active");
+  $topbarTitle.textContent = "BAB 4 · RELASI & FUNGSI";
+  $stageDotsRow.classList.remove("is-visible");
+  $stageDotsRow.innerHTML = "";
+  document.documentElement.style.removeProperty("--mod-accent");
+  document.documentElement.style.removeProperty("--mod-soft");
+  renderHome();
+  persistAppState();
+  window.scrollTo({ top:0, behavior:"auto" });
+}
+
+function enterModule(key){
+  if(!hasStudentIdentity()){
+    showStart();
+    return;
+  }
+  const mod = MODULES[key];
+  const state = AppState.modules[key];
+  const firstNotDone = state.done.findIndex(d=>!d);
+  state.stageIndex = firstNotDone === -1 ? mod.stages.length-1 : firstNotDone;
+  AppState.view = key;
+  $("#startView").classList.remove("is-active");
+  $("#homeView").classList.remove("is-active");
+  $("#moduleView").classList.add("is-active");
+  $("#moduleView").dataset.mod = key;
+  const colors = MODULE_COLORS[key];
+  document.documentElement.style.setProperty("--mod-accent", colors.accent);
+  document.documentElement.style.setProperty("--mod-soft", colors.soft);
+  persistAppState();
+  mountStage(key);
+}
+
+function showStart(){
+  AppState.view = "start";
+  $("#startView").classList.add("is-active");
+  $("#homeView").classList.remove("is-active");
+  $("#moduleView").classList.remove("is-active");
+  $topbarTitle.textContent = "BAB 4 · RELASI & FUNGSI";
+  $stageDotsRow.classList.remove("is-visible");
+  $stageDotsRow.innerHTML = "";
+  document.documentElement.style.removeProperty("--mod-accent");
+  document.documentElement.style.removeProperty("--mod-soft");
+  const form = $("#studentForm");
+  form.hidden = true;
+  $("#startCta").hidden = false;
+  $("#studentName").value = AppState.student.name;
+  $("#studentAttendance").value = AppState.student.attendance;
+  $("#studentClass").value = AppState.student.className;
+  $("#studentError").textContent = "";
+  window.scrollTo({ top:0, behavior:"auto" });
+}
+
+function openStudentForm(){
+  $("#startCta").hidden = true;
+  $("#studentForm").hidden = false;
+  $("#studentError").textContent = "";
+  $("#studentName").focus();
+}
+
+function saveStudentIdentity(event){
+  event.preventDefault();
+  const name = $("#studentName").value.trim();
+  const attendance = $("#studentAttendance").value.trim();
+  const className = $("#studentClass").value.trim();
+  if(!name || !attendance || !className){
+    $("#studentError").textContent = "Lengkapi nama, nomor absen, dan kelas terlebih dahulu.";
+    return;
+  }
+  AppState.student = { name, attendance, className };
+  persistAppState();
+  goHome();
+}
+
+function renderStageDots(key){
+  const mod = MODULES[key];
+  const state = AppState.modules[key];
+  const stageIdx = state.stageIndex;
+  $stageDotsRow.classList.add("is-visible");
+  $stageDotsRow.innerHTML = "";
+  mod.stages.forEach((_,i)=>{
+    const dot = el("span","stage-dot"+(state.done[i]?" is-done":"")+(i===stageIdx?" is-current":""));
+    dot.tabIndex = 0; dot.setAttribute("role","button"); dot.setAttribute("aria-label","Tahap "+(i+1));
+    const accessible = i===0 || state.done[i-1] || state.done[i];
+    if(accessible && i!==stageIdx){
+      dot.classList.add("is-accessible");
+      const jump = ()=>{ state.stageIndex = i; mountStage(key); };
+      dot.addEventListener("click", jump);
+      dot.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); jump(); } });
+    }
+    $stageDotsRow.appendChild(dot);
+  });
+}
+
+function mountStage(key){
+  const mod = MODULES[key];
+  const state = AppState.modules[key];
+  const stageIdx = state.stageIndex;
+  const stage = mod.stages[stageIdx];
+  const isLast = stageIdx === mod.stages.length-1;
+
+  $topbarTitle.textContent = mod.short+" · Tahap "+(stageIdx+1)+" dari "+mod.stages.length;
+  renderStageDots(key);
+
+  $("#stageEyebrow").textContent = "Tahap "+(stageIdx+1)+" · "+stage.label;
+  $("#stageTitle").textContent = stage.title;
+  $("#stageSub").textContent = stage.sub;
+  $stageVisual.innerHTML = "";
+  $stageControls.innerHTML = "";
+
+  const navNext = $("#navNext"), navBack = $("#navBack");
+  navNext.textContent = isLast ? "Selesaikan Modul →" : "Lanjut →";
+  navNext.disabled = !state.done[stageIdx];
+
+  navBack.onclick = ()=>{ if(stageIdx===0) goHome(); else { state.stageIndex -= 1; mountStage(key); } };
+  navNext.onclick = ()=>{
+    if(isLast){
+      burstConfetti(navNext, 42);
+      const mascotEl = $(".brand-mark");
+      if(mascotEl){ mascotEl.classList.add("is-celebrating"); setTimeout(()=>mascotEl.classList.remove("is-celebrating"), 750); }
+      setTimeout(goHome, 260);
+    } else { state.stageIndex += 1; persistAppState(); mountStage(key); }
+  };
+
+  const ctx = {
+    visual: $stageVisual,
+    controls: $stageControls,
+    done: ()=>{
+      if(state.done[stageIdx]) return;
+      state.done[stageIdx] = true;
+      persistAppState();
+      navNext.disabled = false;
+      navNext.classList.add("is-flash");
+      setTimeout(()=>navNext.classList.remove("is-flash"), 700);
+      renderStageDots(key);
+      burstConfetti(navNext, 24);
+    }
+  };
+  stage.mount(ctx);
+  window.scrollTo({ top:0, behavior:"auto" });
+}
+
+function initShellRefs(){
+  $topbarTitle = $("#topbarTitle");
+  $stageDotsRow = $("#stageDotsRow");
+  $stageVisual = $("#stageVisual");
+  $stageControls = $("#stageControls");
+  $("#homeBtn").addEventListener("click", ()=> hasStudentIdentity() ? goHome() : showStart());
+  $("#startCta").addEventListener("click", openStudentForm);
+  $("#studentForm").addEventListener("submit", saveStudentIdentity);
+  $("#downloadPdfBtn").addEventListener("click", downloadStudentPdf);
+}
+
+/* ============================================================
+   LAPORAN PDF SISWA
+   Dibuat langsung di browser agar file tetap dapat dipakai tanpa
+   layanan tambahan. Font PDF bawaan mendukung teks Latin/Indonesia.
+   ============================================================ */
+function pdfSafeText(value){
+  const replacements = {
+    "\u00a0":" ", "\u2018":"'", "\u2019":"'", "\u201c":"\"", "\u201d":"\"",
+    "\u2013":"-", "\u2014":"-", "\u2026":"...", "\u2022":"-"
+  };
+  return String(value || "")
+    .replace(/[\u00a0\u2018\u2019\u201c\u201d\u2013\u2014\u2026\u2022]/g, char=>replacements[char])
+    .replace(/[\u0000-\u001f\u007f-\u009f]/g, " ")
+    .split("").map(char=>char.charCodeAt(0)<=255 ? char : "?").join("");
+}
+
+function pdfEscape(value){
+  return pdfSafeText(value).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)");
+}
+
+function pdfBytes(value){
+  /* Struktur PDF membutuhkan karakter baris baru utuh, terutama sesudah
+     kata "stream". Teks jawaban tetap sudah diamankan oleh pdfEscape(). */
+  const source = String(value || "");
+  const bytes = new Uint8Array(source.length);
+  for(let index=0; index<source.length; index++) bytes[index] = source.charCodeAt(index) & 255;
+  return bytes;
+}
+
+function joinPdfBytes(chunks){
+  const total = chunks.reduce((sum, chunk)=>sum+chunk.length, 0);
+  const result = new Uint8Array(total);
+  let offset = 0;
+  chunks.forEach(chunk=>{ result.set(chunk, offset); offset += chunk.length; });
+  return result;
+}
+
+function wrapPdfText(value, maxChars){
+  const paragraphs = pdfSafeText(value).split(/\r?\n/);
+  const lines = [];
+  paragraphs.forEach(paragraph=>{
+    const words = paragraph.trim().split(/\s+/).filter(Boolean);
+    if(!words.length){ lines.push(""); return; }
+    let line = "";
+    words.forEach(word=>{
+      if(!line){
+        while(word.length>maxChars){ lines.push(word.slice(0,maxChars)); word = word.slice(maxChars); }
+        line = word;
+      } else if((line+" "+word).length<=maxChars){
+        line += " "+word;
+      } else {
+        lines.push(line);
+        while(word.length>maxChars){ lines.push(word.slice(0,maxChars)); word = word.slice(maxChars); }
+        line = word;
+      }
+    });
+    if(line) lines.push(line);
+  });
+  return lines;
+}
+
+function getStudentAnswerReport(){
+  const recorded = Object.values(AppState.answers).sort((a,b)=>a.order-b.order);
+  return ["Latihan Relasi", "Latihan Fungsi"].map(sectionTitle=>{
+    const entries = recorded.filter(entry=>entry.section===sectionTitle).map((entry,index)=>({
+      label:"Latihan "+(index+1),
+      question:entry.question || "Jawaban latihan interaktif.",
+      answer:entry.answer || "Belum diisi."
+    }));
+    return entries.length ? { title:"Rekapan Jawaban - "+sectionTitle, entries } : null;
+  }).filter(Boolean);
+}
+
+function getStudentReport(){
+  return [
+    ...getStudentAnswerReport(),
+    {
+      title:"Rekapan Jawaban Uraian - Relasi",
+      entries:[
+        {
+          label:"Relasi Buatanmu",
+          question:"Menurutmu, apakah relasi buatanmu tetap sah walau ada yang punya 2 pasangan? Kenapa?",
+          answer:AppState.reflections.a3
+        },
+        {
+          label:"Refleksi Akhir 1",
+          question:"Menurutmu, apa itu relasi? Coba jelaskan dengan bahasamu sendiri, seolah kamu menjelaskannya ke teman sekelasmu.",
+          answer:AppState.reflections.relasiFinal[0]
+        },
+        {
+          label:"Refleksi Akhir 2",
+          question:"Sebutkan satu contoh relasi dari kehidupan sehari-harimu. Apa himpunan asal dan himpunan kawannya?",
+          answer:AppState.reflections.relasiFinal[1]
+        }
+      ]
+    },
+    {
+      title:"Rekapan Jawaban Uraian - Fungsi",
+      entries:[
+        {
+          label:"Refleksi Akhir 1",
+          question:"Menurutmu, apa yang membedakan fungsi dari relasi biasa? Jelaskan dengan bahasamu sendiri.",
+          answer:AppState.reflections.fungsiFinal[0]
+        },
+        {
+          label:"Refleksi Akhir 2",
+          question:"Menurutmu, kenapa syarat 'tepat satu pasangan' itu penting? Coba bayangkan kalau syarat itu tidak ada, kira-kira apa masalahnya?",
+          answer:AppState.reflections.fungsiFinal[1]
+        }
+      ]
+    }
+  ];
+}
+
+function buildStudentPdf(){
+  const PAGE_WIDTH = 595.28, PAGE_HEIGHT = 841.89, MARGIN = 48, CONTENT_WIDTH = PAGE_WIDTH-(MARGIN*2);
+  const pages = [];
+  let page;
+
+  function studentIdentitySummary(){
+    return "Nama: "+(textValue(AppState.student.name).trim() || "-")+" | Nomor Absen: "+(textValue(AppState.student.attendance).trim() || "-")+" | Kelas: "+(textValue(AppState.student.className).trim() || "-");
+  }
+  function addContinuationHeader(){
+    addText("REKAPAN JAWABAN SISWA", MARGIN, page.y, 9.5, true, "0.04 0.42 0.29");
+    page.y -= 15;
+    addParagraph(studentIdentitySummary(), 8.5, "0.35 0.40 0.52");
+    page.y -= 5;
+    addRule(page.y);
+    page.y -= 20;
+  }
+  function createPage(){
+    page = { commands:[], y:PAGE_HEIGHT-MARGIN };
+    pages.push(page);
+    if(pages.length>1) addContinuationHeader();
+  }
+  function addText(text, x, y, size, bold, color){
+    page.commands.push("BT /"+(bold?"F2":"F1")+" "+size+" Tf "+(color||"0.09 0.13 0.24")+" rg 1 0 0 1 "+x.toFixed(2)+" "+y.toFixed(2)+" Tm ("+pdfEscape(text)+") Tj ET");
+  }
+  function addRule(y){
+    page.commands.push("0.80 0.85 0.85 RG 0.8 w "+MARGIN+" "+y.toFixed(2)+" m "+(PAGE_WIDTH-MARGIN)+" "+y.toFixed(2)+" l S");
+  }
+  function ensureSpace(height){
+    if(page.y-height < MARGIN+24) createPage();
+  }
+  function addParagraph(text, size, color, indent){
+    const safeSize = size || 10;
+    const leading = safeSize*1.42;
+    const x = MARGIN+(indent||0);
+    const maxChars = Math.max(24, Math.floor((CONTENT_WIDTH-(indent||0))/(safeSize*.52)));
+    wrapPdfText(text, maxChars).forEach(line=>{
+      ensureSpace(leading);
+      if(line) addText(line, x, page.y, safeSize, false, color||"0.12 0.16 0.26");
+      page.y -= leading;
+    });
+  }
+  function addSection(title){
+    ensureSpace(32);
+    page.commands.push("0.86 0.95 0.91 rg "+MARGIN+" "+(page.y-17).toFixed(2)+" "+CONTENT_WIDTH.toFixed(2)+" 24 re f");
+    addText(title, MARGIN+12, page.y-2, 12, true, "0.04 0.42 0.29");
+    page.y -= 36;
+  }
+  function addIdentityLine(label, value){
+    addParagraph(label+": "+(textValue(value).trim() || "-"), 10.5, "0.09 0.13 0.24");
+  }
+  function addEntry(entry, index){
+    ensureSpace(76);
+    addText((index+1)+". "+entry.label, MARGIN, page.y, 10.5, true);
+    page.y -= 16;
+    addParagraph("Pertanyaan: "+entry.question, 9, "0.35 0.40 0.52");
+    page.y -= 2;
+    ensureSpace(44);
+    addText("Jawaban siswa yang direkam:", MARGIN, page.y, 9.5, true, "0.04 0.42 0.29");
+    page.y -= 15;
+    addParagraph(textValue(entry.answer).trim() || "Belum diisi.", 10, "0.09 0.13 0.24", 10);
+    page.y -= 13;
+  }
+
+  createPage();
+  addText("Rekapan Jawaban Siswa", MARGIN, page.y, 21, true);
+  page.y -= 25;
+  addText("Lab Relasi & Fungsi - Matematika Kelas 8", MARGIN, page.y, 10, false, "0.35 0.40 0.52");
+  page.y -= 17;
+  addParagraph("Dokumen ini memuat identitas siswa serta seluruh jawaban latihan dan refleksi yang telah direkam.", 9, "0.35 0.40 0.52");
+  page.y -= 16;
+  addText("IDENTITAS SISWA", MARGIN, page.y, 11, true, "0.04 0.42 0.29");
+  page.y -= 18;
+  addIdentityLine("Nama", AppState.student.name);
+  addIdentityLine("Nomor Absen", AppState.student.attendance);
+  addIdentityLine("Kelas", AppState.student.className);
+  page.y -= 7;
+  addRule(page.y);
+  page.y -= 24;
+
+  getStudentReport().forEach(section=>{
+    addSection(section.title);
+    section.entries.forEach((entry,index)=>addEntry(entry,index));
+  });
+
+  const pageCount = pages.length;
+  pages.forEach((item,index)=>{
+    item.commands.push("BT /F1 8 Tf 0.45 0.49 0.60 rg 1 0 0 1 "+MARGIN+" 30 Tm (Rekapan Jawaban Siswa - Lab Relasi & Fungsi) Tj ET");
+    const pageLabel = "Halaman "+(index+1)+" dari "+pageCount;
+    item.commands.push("BT /F1 8 Tf 0.45 0.49 0.60 rg 1 0 0 1 "+(PAGE_WIDTH-MARGIN-72)+" 30 Tm ("+pdfEscape(pageLabel)+") Tj ET");
+  });
+
+  const objects = [];
+  const pageRefs = pages.map((_, index)=>5+(index*2));
+  objects[1] = pdfBytes("<< /Type /Catalog /Pages 2 0 R >>");
+  objects[2] = pdfBytes("<< /Type /Pages /Kids ["+pageRefs.map(ref=>ref+" 0 R").join(" ")+"] /Count "+pages.length+" >>");
+  objects[3] = pdfBytes("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>");
+  objects[4] = pdfBytes("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>");
+  pages.forEach((item,index)=>{
+    const pageRef = 5+(index*2), contentRef = pageRef+1;
+    const content = pdfBytes(item.commands.join("\n"));
+    objects[pageRef] = pdfBytes("<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /MediaBox [0 0 "+PAGE_WIDTH+" "+PAGE_HEIGHT+"] /Contents "+contentRef+" 0 R >>");
+    objects[contentRef] = joinPdfBytes([pdfBytes("<< /Length "+content.length+" >>\nstream\n"), content, pdfBytes("\nendstream")]);
+  });
+
+  const chunks = [pdfBytes("%PDF-1.4\n")];
+  const offsets = [0];
+  let byteLength = chunks[0].length;
+  for(let index=1; index<objects.length; index++){
+    offsets[index] = byteLength;
+    const objectBytes = joinPdfBytes([pdfBytes(index+" 0 obj\n"), objects[index], pdfBytes("\nendobj\n")]);
+    chunks.push(objectBytes);
+    byteLength += objectBytes.length;
+  }
+  const xrefOffset = byteLength;
+  let xref = "xref\n0 "+objects.length+"\n0000000000 65535 f \n";
+  for(let index=1; index<objects.length; index++) xref += String(offsets[index]).padStart(10,"0")+" 00000 n \n";
+  xref += "trailer\n<< /Size "+objects.length+" /Root 1 0 R >>\nstartxref\n"+xrefOffset+"\n%%EOF";
+  chunks.push(pdfBytes(xref));
+  return joinPdfBytes(chunks);
+}
+
+function pdfFilenamePart(value){
+  const normalized = pdfSafeText(value).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return normalized.replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "siswa";
+}
+
+function downloadStudentPdf(){
+  if(!hasStudentIdentity()){
+    showStart();
+    openStudentForm();
+    return;
+  }
+  if(!isCourseCompleted()) return;
+  const pdfBlob = new Blob([buildStudentPdf()], { type:"application/pdf" });
+  const url = URL.createObjectURL(pdfBlob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "jawaban-relasi-fungsi-"+pdfFilenamePart(AppState.student.name)+".pdf";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1500);
+}
+
+/* ============================================================
+   TAHAP REFLEKSI AKHIR MODUL (dipakai di kedua modul)
+   Bukan soal berjawaban pasti, murni uraian, siswa menuliskan
+   pemahamannya sendiri dengan kalimat sendiri. Selesai begitu
+   semua pertanyaan sudah diisi secukupnya.
+   ============================================================ */
+function makeReflectionStage(recapPoints, questions, reflectionKey){
+  return {
+    label: "Refleksi Akhir",
+    title: "Ceritakan pemahamanmu dengan bahasamu sendiri.",
+    sub: "Tidak ada jawaban salah. Tulis sesuai pemahamanmu sendiri, lalu modul ini selesai.",
+    mount(ctx){
+      const recapPanel = el("div","panel");
+      recapPanel.appendChild(el("div","panel-title")).appendChild(el("h4","","Yang Sudah Kamu Pelajari"));
+      const list = el("div","recap-list");
+      recapPoints.forEach(pt=>{
+        const item = el("div","recap-item");
+        item.appendChild(el("span","rico","✓"));
+        item.appendChild(el("span","",pt));
+        list.appendChild(item);
+      });
+      recapPanel.appendChild(list);
+      ctx.visual.appendChild(recapPanel);
+
+      const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb);
+      ctx.controls.appendChild(fbWrap);
+      setFeedback(fb, { state:"idle", message:"Jawab semua pertanyaan di bawah dengan kalimatmu sendiri." });
+
+      const qPanel = el("div","panel");
+      ctx.controls.appendChild(qPanel);
+      const savedAnswers = Array.isArray(AppState.reflections[reflectionKey]) ? AppState.reflections[reflectionKey] : [];
+      const answered = questions.map((_, qi)=>textValue(savedAnswers[qi]).trim().length >= 8);
+      let finished = false;
+
+      questions.forEach((q, qi)=>{
+        const qWrap = el("div","reflect-q");
+        const pEl = el("p","",q); pEl.style.cssText = "font-weight:700;font-size:14.5px;margin-bottom:10px;";
+        qWrap.appendChild(pEl);
+        const ta = document.createElement("textarea");
+        ta.className = "reflect-input"; ta.rows = 3;
+        ta.placeholder = "Tuliskan jawabanmu di sini...";
+        ta.value = textValue(savedAnswers[qi]);
+        ta.classList.toggle("has-content", answered[qi]);
+        qWrap.appendChild(ta);
+        qPanel.appendChild(qWrap);
+        ta.addEventListener("input", ()=>{
+          const ok = ta.value.trim().length >= 8;
+          ta.classList.toggle("has-content", ok);
+          answered[qi] = ok;
+          AppState.reflections[reflectionKey][qi] = ta.value;
+          persistAppState();
+          if(!finished && answered.every(Boolean)){
+            finished = true;
+            setFeedback(fb, { state:"hint", message:"Terima kasih sudah menuliskan refleksimu! Coba baca ulang jawabanmu, lalu selesaikan modul ini." });
+            ctx.done();
+          }
+        });
+      });
+      if(answered.every(Boolean)){
+        finished = true;
+        setFeedback(fb, { state:"hint", message:"Jawaban refleksimu sudah tersimpan. Kamu dapat membacanya kembali sebelum menyelesaikan modul." });
+        ctx.done();
+      }
+    }
+  };
+}
+
+/* ============================================================
+   MODUL A · MEMAHAMI RELASI
+   ============================================================ */
+const A1_PASANGAN = {
+  label: "Membentuk Pasangan",
+  title: "Hubungkan sesuai petunjuk untuk membentuk relasi.",
+  sub: "Ketuk satu nama di kiri, lalu satu menu di kanan, sesuai petunjuknya.",
+  mount(ctx){
+    const domain = ["Eka","Fajar","Gita"];
+    const codomain = ["Nasi Goreng","Soto","Rawon"];
+    const clues = [
+      { d:0, c:0, text:"Eka menyukai Nasi Goreng." },
+      { d:1, c:1, text:"Fajar menyukai Soto." },
+      { d:2, c:0, text:"Gita menyukai Nasi Goreng." },
+      { d:2, c:2, text:"Gita juga menyukai Rawon." }
+    ];
+    let round = 0, selectedDomain = null;
+    const pairsConfig = [];
+
+    const dcard = el("div","diagram-card");
+    dcard.appendChild(el("div","diagram-card-head")).appendChild(el("h4","","🍜 Kedai Makan Bu Ratih"));
+    const dwrap = el("div","");
+    dcard.appendChild(dwrap);
+    ctx.visual.appendChild(dcard);
+
+    const api = buildDiagram(dwrap, {
+      domainTitle:"Pelanggan", codomainTitle:"Menu", domain, codomain, pairs: pairsConfig, interactive:true,
+      onNodeClick(side, idx, nodeEl){
+        if(side==="d"){
+          api.dNodes.forEach(n=>n.classList.remove("is-selected"));
+          selectedDomain = idx; nodeEl.classList.add("is-selected");
+          return;
+        }
+        if(selectedDomain===null){
+          setFeedback(fb, { state:"idle", message:"Pilih dulu nama pelanggannya di sebelah kiri." });
+          return;
+        }
+        const clue = clues[round];
+        if(selectedDomain===clue.d && idx===clue.c){
+          pairsConfig.push([clue.d, clue.c, "line-ok"]);
+          api.draw(true);
+          api.dNodes[clue.d].classList.remove("is-selected");
+          selectedDomain = null;
+          setFeedback(fb, { state:"success", message:"Tepat!" });
+          round++;
+          advance();
+        } else {
+          api.dNodes.forEach(n=>n.classList.remove("is-selected"));
+          selectedDomain = null;
+          setFeedback(fb, { state:"error", message:"Belum pas. Baca lagi petunjuknya, lalu coba sekali lagi." });
+        }
+      }
+    });
+
+    ctx.controls.appendChild((()=>{ const p = el("div","panel");
+      p.innerHTML = `<div class="panel-title"><h4 id="a1RoundLabel">Petunjuk 1/${clues.length}</h4><span id="a1Pips"></span></div><p class="mono" id="a1Clue" style="font-weight:700;font-size:15px;"></p>`;
+      return p; })());
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    const roundLabel = $("#a1RoundLabel"), pipsEl = $("#a1Pips"), clueEl = $("#a1Clue");
+    pipsEl.innerHTML = roundPipsHTML(0, clues.length);
+    setFeedback(fb, { state:"idle", message:"Ketuk nama pelanggan, lalu menu yang disebut petunjuk." });
+
+    function advance(){
+      pipsEl.innerHTML = roundPipsHTML(round, clues.length);
+      if(round >= clues.length){
+        roundLabel.textContent = "Selesai!";
+        clueEl.textContent = "Semua pasangan berhasil dibentuk.";
+        recordStudentAnswer({
+          id:"a1-pasangan", section:"Latihan Relasi", order:10,
+          question:"Bentuk pasangan pelanggan dan menu sesuai petunjuk."
+        }, formatPairAnswer(domain, codomain, pairsConfig));
+        setFeedback(fb, { state:"success", message:"Relasi ini punya "+clues.length+" pasangan. Perhatikan, Gita muncul dua kali. Satu nama, dua pasangan!" });
+        ctx.done();
+        return;
+      }
+      roundLabel.textContent = "Petunjuk "+(round+1)+"/"+clues.length;
+      clueEl.textContent = clues[round].text;
+    }
+    clueEl.textContent = clues[0].text;
+  }
+};
+
+const A2_BANYAK_WAJAH = {
+  label: "Satu Relasi, Banyak Wajah",
+  title: "Cocokkan diagram dengan pasangan berurutan yang tepat.",
+  sub: "Relasi yang sama bisa ditulis dengan cara yang berbeda-beda.",
+  mount(ctx){
+    const rounds = [
+      { domain:["Rani","Doni","Wulan"], codomain:["Basket","Paduan Suara","Pramuka"], pairs:[[0,0],[1,2],[2,1]],
+        options:[
+          { text:"{(Rani, Basket), (Doni, Pramuka), (Wulan, Paduan Suara)}", correct:true, note:"Tepat, setiap anak panah terbaca sebagai satu pasangan (asal, tujuan)." },
+          { text:"{(Rani, Pramuka), (Doni, Basket), (Wulan, Paduan Suara)}", correct:false, note:"Cek lagi arah panah dari Rani, ia sebenarnya menuju Basket." },
+          { text:"{(Rani, Basket), (Doni, Pramuka)}", correct:false, note:"Ada satu pasangan yang terlewat. Wulan juga punya pasangan." },
+          { text:"{(Rani, Basket), (Doni, Pramuka), (Wulan, Basket)}", correct:false, note:"Cek lagi pasangan Wulan, anak panahnya tidak menuju Basket." }
+        ],
+        reflectionText:"Himpunan pasangan berurutannya: {(Rani, Basket), (Doni, Pramuka), (Wulan, Paduan Suara)}. Setiap anak panah pada diagram dibaca sebagai satu pasangan (asal, tujuan)." },
+      { domain:["Ali","Beni"], codomain:["Merah","Biru","Hijau"], pairs:[[0,0],[0,2],[1,1]],
+        options:[
+          { text:"{(Ali, Merah), (Ali, Hijau), (Beni, Biru)}", correct:true, note:"Tepat, Ali punya dua anak panah keluar, itu wajar dalam relasi biasa." },
+          { text:"{(Ali, Merah), (Beni, Hijau), (Beni, Biru)}", correct:false, note:"Hijau itu pasangan Ali, bukan Beni." },
+          { text:"{(Ali, Merah), (Ali, Hijau)}", correct:false, note:"Pasangan Beni terlewat." },
+          { text:"{(Ali, Biru), (Ali, Hijau), (Beni, Merah)}", correct:false, note:"Cek lagi, Ali sebenarnya tidak menuju Biru." }
+        ],
+        reflectionText:"Himpunan pasangan berurutannya: {(Ali, Merah), (Ali, Hijau), (Beni, Biru)}. Ali punya dua anak panah keluar, itu wajar dalam relasi biasa." },
+      { domain:["Sinta","Yoga","Wati"], codomain:["Voli","Basket"], pairs:[[0,0],[1,0],[2,1]],
+        options:[
+          { text:"{(Sinta, Voli), (Yoga, Voli), (Wati, Basket)}", correct:true, note:"Tepat, Sinta dan Yoga sama-sama menuju Voli, dan itu sah." },
+          { text:"{(Sinta, Voli), (Yoga, Basket), (Wati, Basket)}", correct:false, note:"Yoga sebenarnya menuju Voli, bukan Basket." },
+          { text:"{(Sinta, Voli), (Wati, Basket)}", correct:false, note:"Pasangan Yoga terlewat." },
+          { text:"{(Sinta, Basket), (Yoga, Voli), (Wati, Voli)}", correct:false, note:"Cek lagi masing-masing anak panah satu per satu." }
+        ],
+        reflectionText:"Himpunan pasangan berurutannya: {(Sinta, Voli), (Yoga, Voli), (Wati, Basket)}. Sinta dan Yoga sama-sama menuju Voli. Dua anggota A boleh menuju anggota B yang sama." }
+    ];
+    let round = 0;
+    const pipsWrap = el("div","panel");
+    pipsWrap.innerHTML = `<div class="panel-title"><h4>Ronde ${round+1}/${rounds.length}</h4><span id="a2Pips"></span></div>`;
+    ctx.controls.appendChild(pipsWrap);
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    const optsPanel = el("div","panel");
+    const optsHolder = el("div","");
+    optsPanel.appendChild(optsHolder);
+    ctx.controls.appendChild(optsPanel);
+
+    function renderRound(){
+      $("#a2Pips").innerHTML = roundPipsHTML(round, rounds.length);
+      pipsWrap.querySelector("h4").textContent = "Ronde "+(round+1)+"/"+rounds.length;
+      const r = rounds[round];
+      const dcard = el("div","diagram-card");
+      buildDiagram(dcard, { domainTitle:"A", codomainTitle:"B", domain:r.domain, codomain:r.codomain, pairs:r.pairs, interactive:false });
+      ctx.visual.innerHTML = ""; ctx.visual.appendChild(dcard);
+      setFeedback(fb, { state:"idle", message:"Pilih himpunan pasangan berurutan yang sesuai dengan diagram." });
+      renderChoiceRound(optsHolder, r.options, fb, r.reflectionText, ()=>{
+        round++;
+        if(round>=rounds.length){
+          setFeedback(fb, { state:"hint", message:"Semua ronde selesai! Diagram panah, pasangan berurutan, tabel, dan diagram Cartesius selalu menunjukkan relasi yang sama." });
+          ctx.done();
+        } else {
+          renderRound();
+        }
+      }, {
+        id:"a2-"+(round+1), section:"Latihan Relasi", order:20+round,
+        question:"Pilih himpunan pasangan berurutan yang sesuai dengan diagram pada ronde "+(round+1)+"."
+      });
+    }
+    renderRound();
+  }
+};
+
+const A3_BUATANMU = {
+  label: "Relasi Buatanmu",
+  title: "Hubungkan sendiri anggota kedua himpunan ini, sebebas yang kamu mau.",
+  sub: "Tidak ada jawaban salah di sini. Coba dulu, lalu ceritakan apa yang kamu temukan.",
+  mount(ctx){
+    const domain = ["Andi","Bela","Citra"];
+    const codomain = ["Bakso","Mie Ayam","Sate","Es Teh"];
+    const pairsConfig = [];
+    let reflectDone = AppState.reflections.a3.trim().length >= 3, selectedDomain = null;
+
+    const dcard = el("div","diagram-card");
+    ctx.visual.appendChild(dcard);
+    const api = buildDiagram(dcard, {
+      domainTitle:"Siswa", codomainTitle:"Makanan", domain, codomain, pairs: pairsConfig, interactive:true,
+      onNodeClick(side, idx, nodeEl){
+        if(side==="d"){
+          api.dNodes.forEach(n=>n.classList.remove("is-selected"));
+          selectedDomain = idx; nodeEl.classList.add("is-selected");
+          return;
+        }
+        if(selectedDomain===null){ setFeedback(fb,{state:"idle",message:"Pilih dulu satu siswa di sebelah kiri."}); return; }
+        const existingIdx = pairsConfig.findIndex(p=>p[0]===selectedDomain && p[1]===idx);
+        if(existingIdx>=0) pairsConfig.splice(existingIdx,1);
+        else pairsConfig.push([selectedDomain, idx, "line-accent"]);
+        api.dNodes.forEach(n=>n.classList.remove("is-selected"));
+        selectedDomain = null;
+        api.draw(true);
+        updateReadout();
+        recordStudentAnswer({
+          id:"a3-relasi-buatan", section:"Latihan Relasi", order:30,
+          question:"Tuliskan pasangan yang kamu buat pada relasi siswa dan makanan."
+        }, formatPairAnswer(domain, codomain, pairsConfig));
+      }
+    });
+
+    const readoutPanel = el("div","panel");
+    readoutPanel.innerHTML = '<div class="panel-title"><h4>Relasimu Sekarang</h4></div><div class="readout-row"><div class="readout" id="roCount"><span class="rlabel">Jumlah pasangan</span><span class="rvalue">0</span></div><div class="readout" id="roMulti"><span class="rlabel">Ada yg lebih dari 1 pasangan?</span><span class="rvalue">Belum</span></div></div>';
+    ctx.controls.appendChild(readoutPanel);
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    setFeedback(fb, { state:"idle", message:"Ketuk satu siswa, lalu satu makanan, untuk membuat pasangan. Ketuk pasangan yang sama lagi untuk menghapusnya." });
+    const reflectPanel = el("div","panel"); ctx.controls.appendChild(reflectPanel);
+
+    function updateReadout(){
+      readoutPanel.querySelector("#roCount .rvalue").textContent = pairsConfig.length;
+      const counts = {};
+      pairsConfig.forEach(p=>{ counts[p[0]] = (counts[p[0]]||0)+1; });
+      const hasMulti = Object.values(counts).some(c=>c>1);
+      const multiEl = readoutPanel.querySelector("#roMulti");
+      multiEl.querySelector(".rvalue").textContent = hasMulti ? "Ya!" : "Belum";
+      multiEl.classList.toggle("ro-ok", hasMulti);
+      if(pairsConfig.length>=3 && !reflectPanel.dataset.shown) showReflect();
+    }
+    function showReflect(){
+      if(reflectPanel.dataset.shown) return;
+      reflectPanel.dataset.shown = "1";
+      reflectPanel.innerHTML = '<div class="reflect-label"><span class="ico-wrap">✎</span><span>Coba pastikan ada satu siswa yang punya 2 pasangan sekaligus (jika belum). Lalu ceritakan: menurutmu, apakah relasi buatanmu tetap sah walau ada yang punya 2 pasangan? Kenapa?</span></div><textarea class="reflect-input" id="a3reflect" rows="3" placeholder="Tulis pendapatmu di sini..."></textarea><p class="reflect-hint">Tidak ada jawaban salah, yang penting kamu sudah mencoba dan berpikir.</p>';
+      const ta = $("#a3reflect");
+      ta.value = AppState.reflections.a3;
+      ta.classList.toggle("has-content", reflectDone);
+      ta.addEventListener("input", ()=>{
+        ta.classList.toggle("has-content", ta.value.trim().length>=3);
+        AppState.reflections.a3 = ta.value;
+        persistAppState();
+        if(!reflectDone && ta.value.trim().length>=3){
+          reflectDone = true;
+          setFeedback(fb, { state:"success", message:"Terima kasih sudah berbagi pemikiranmu! Relasi memang boleh begitu. Satu anggota himpunan asal boleh punya lebih dari satu pasangan." });
+          ctx.done();
+        }
+      });
+    }
+    if(reflectDone) showReflect();
+    updateReadout();
+  }
+};
+
+const A4_TANTANGAN = {
+  label: "Tantangan Campuran",
+  title: "Uji pemahamanmu lewat beberapa tantangan singkat.",
+  sub: "Ini rangkuman dari semua yang sudah kamu temukan di tahap-tahap sebelumnya.",
+  mount(ctx){
+    const rounds = [
+      { prompt:"Pernyataan: “Dalam sebuah relasi, satu anggota himpunan asal boleh memiliki lebih dari satu pasangan di himpunan kawan.”",
+        options:[
+          { text:"Benar", correct:true, note:"Tepat, seperti Gita yang menyukai dua menu sekaligus di Kedai Bu Ratih." },
+          { text:"Salah", correct:false, note:"Justru sebaliknya, relasi biasa mengizinkan hal ini." }
+        ],
+        reflectionText:"Boleh! Relasi biasa memang fleksibel, seperti Gita di Kedai Bu Ratih yang menyukai dua menu sekaligus. Aturan yang lebih ketat (harus tepat satu pasangan) baru berlaku pada FUNGSI, yang akan kamu pelajari di modul berikutnya." },
+      { context:"Sari mencatat dua hobi: membaca dan melukis. Tono hanya mencatat satu hobi: sepak bola.",
+        prompt:"Berapa banyak pasangan berurutan yang terbentuk dari relasi “siswa dengan hobinya” ini?",
+        options:[
+          { text:"1 pasangan", correct:false, note:"Terlalu sedikit, Sari sendiri sudah menyumbang lebih dari satu." },
+          { text:"2 pasangan", correct:false, note:"Sari mencatat DUA hobi, bukan satu." },
+          { text:"3 pasangan", correct:true, note:"Tepat, 2 dari Sari, 1 dari Tono." },
+          { text:"4 pasangan", correct:false, note:"Terlalu banyak, Tono hanya mencatat satu hobi." }
+        ],
+        reflectionText:"Jawabannya 3 pasangan: (Sari, membaca), (Sari, melukis), dan (Tono, sepak bola). Sari menyumbang 2 pasangan karena mencatat 2 hobi, ditambah 1 dari Tono." },
+      { context:"Budi mencatat 3 warna favorit: merah, biru, kuning. Ani mencatat 1 warna favorit: hijau.",
+        prompt:"Berapa banyak pasangan berurutan pada relasi “siswa dengan warna favorit” ini?",
+        options:[
+          { text:"2 pasangan", correct:false, note:"Terlalu sedikit, hitung lagi punya Budi." },
+          { text:"3 pasangan", correct:false, note:"Itu baru dari Budi saja, Ani juga menyumbang satu." },
+          { text:"4 pasangan", correct:true, note:"Tepat, 3 dari Budi, 1 dari Ani." },
+          { text:"5 pasangan", correct:false, note:"Terlalu banyak, periksa lagi jumlah warna tiap siswa." }
+        ],
+        reflectionText:"Jawabannya 4 pasangan: 3 dari Budi (merah, biru, kuning), ditambah 1 dari Ani (hijau)." }
+    ];
+    let round = 0;
+    const pipsWrap = el("div","panel");
+    pipsWrap.innerHTML = '<div class="panel-title"><h4 id="a4h">Ronde 1/'+rounds.length+'</h4><span id="a4Pips"></span></div><div class="mono" id="a4ctx" style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px;"></div><p id="a4prompt" style="font-weight:700;font-size:15px;"></p>';
+    ctx.visual.appendChild(pipsWrap);
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    const optsHolder = el("div","panel"); ctx.controls.appendChild(optsHolder);
+
+    function renderRound(){
+      const r = rounds[round];
+      $("#a4h").textContent = "Ronde "+(round+1)+"/"+rounds.length;
+      $("#a4Pips").innerHTML = roundPipsHTML(round, rounds.length);
+      $("#a4ctx").textContent = r.context || "";
+      $("#a4ctx").style.display = r.context ? "block" : "none";
+      $("#a4prompt").textContent = r.prompt;
+      setFeedback(fb, { state:"idle", message:"Pilih jawabanmu." });
+      renderChoiceRound(optsHolder, r.options, fb, r.reflectionText, ()=>{
+        round++;
+        if(round>=rounds.length){
+          setFeedback(fb, { state:"hint", message:"Semua tantangan Topik Relasi selesai! Lanjut ke Modul Fungsi untuk melihat relasi yang lebih “istimewa”." });
+          ctx.done();
+        } else renderRound();
+      }, {
+        id:"a4-"+(round+1), section:"Latihan Relasi", order:40+round,
+        question:r.prompt
+      });
+    }
+    renderRound();
+  }
+};
+
+const A5_REFLEKSI = makeReflectionStage(
+  [
+    "Relasi menghubungkan anggota himpunan asal (A) dengan anggota himpunan kawan (B), lewat pasangan berurutan (a, b).",
+    "Satu anggota A boleh punya lebih dari satu pasangan. Relasi biasa itu fleksibel.",
+    "Relasi yang sama bisa digambarkan dengan diagram panah, pasangan berurutan, tabel, atau diagram Cartesius."
+  ],
+  [
+    "Menurutmu, apa itu relasi? Coba jelaskan dengan bahasamu sendiri, seolah kamu menjelaskannya ke teman sekelasmu.",
+    "Sebutkan satu contoh relasi dari kehidupan sehari-harimu (boleh beda dari contoh di modul ini). Apa himpunan asal dan himpunan kawannya?"
+  ],
+  "relasiFinal"
+);
+
+MODULES.relasi = {
+  key:"relasi", title:"Memahami Relasi", short:"Relasi", iconLetter:"A",
+  desc:"Bagaimana dua kelompok bisa saling berpasangan?",
+  stages:[A1_PASANGAN, A2_BANYAK_WAJAH, A3_BUATANMU, A4_TANTANGAN, A5_REFLEKSI]
+};
+
+/* ============================================================
+   MODUL B · MEMAHAMI FUNGSI
+   ============================================================ */
+const B1_PENDETEKSI = {
+  label: "Pendeteksi Fungsi",
+  title: "Tebak dulu, baru buka jawabannya.",
+  sub: "Fungsi adalah relasi yang setiap anggota asalnya punya TEPAT SATU pasangan.",
+  mount(ctx){
+    const examples = [
+      { domain:["P","Q","R"], codomain:["1","2"], pairs:[[0,0],[1,1],[2,1]], isFunc:true,
+        explain:"Ini FUNGSI. Setiap anggota A (P, Q, R) punya tepat satu anak panah keluar. Q dan R memang menuju angka yang sama, itu tidak melanggar aturan." },
+      { domain:["K","L","M"], codomain:["x","y","z"], pairs:[[0,0],[0,1],[1,2],[2,2]], isFunc:false, flagDomain:[0],
+        explain:"Ini BUKAN fungsi. K punya DUA anak panah keluar, ke x dan ke y. Padahal syarat fungsi: setiap anggota A hanya boleh punya TEPAT SATU pasangan." },
+      { domain:["a","b","c"], codomain:["x","y"], pairs:[[0,0],[1,1]], isFunc:false, flagDomain:[2],
+        explain:"Ini BUKAN fungsi. c tidak punya pasangan sama sekali. Padahal syarat fungsi: SETIAP anggota A wajib mendapat pasangan." }
+    ];
+    let round = 0;
+    const pipsWrap = el("div","panel");
+    pipsWrap.innerHTML = '<div class="panel-title"><h4 id="b1h">Tantangan 1/'+examples.length+'</h4><span id="b1Pips"></span></div>';
+    ctx.controls.appendChild(pipsWrap);
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    const guessPanel = el("div","panel");
+    ctx.controls.appendChild(guessPanel);
+
+    function renderRound(){
+      const ex = examples[round];
+      $("#b1h").textContent = "Tantangan "+(round+1)+"/"+examples.length;
+      $("#b1Pips").innerHTML = roundPipsHTML(round, examples.length);
+      const dcard = el("div","diagram-card");
+      const api = buildDiagram(dcard, { domainTitle:"A", codomainTitle:"B", domain:ex.domain, codomain:ex.codomain, pairs:ex.pairs, interactive:false });
+      (ex.flagDomain||[]).forEach(i=>api.dNodes[i].classList.add("is-flagged"));
+      ctx.visual.innerHTML = ""; ctx.visual.appendChild(dcard);
+      setFeedback(fb, { state:"idle", message:"Perhatikan diagramnya, lalu tebak." });
+      const options = [
+        { text:"Fungsi", correct: ex.isFunc, note: ex.isFunc ? "Tepat!" : "Coba periksa lagi tiap anggota A satu per satu." },
+        { text:"Bukan Fungsi", correct: !ex.isFunc, note: !ex.isFunc ? "Tepat!" : "Coba periksa lagi, sebenarnya semua anggota A sudah punya tepat satu pasangan." }
+      ];
+      renderChoiceRound(guessPanel, options, fb, ex.explain, ()=>{
+        round++;
+        if(round>=examples.length){
+          setFeedback(fb, { state:"hint", message:"Semua tantangan selesai! Ingat, cek tiap anggota A harus tepat satu anak panah keluar, tidak kurang tidak lebih." });
+          ctx.done();
+        } else renderRound();
+      }, {
+        id:"b1-"+(round+1), section:"Latihan Fungsi", order:110+round,
+        question:"Tentukan apakah diagram pada tantangan "+(round+1)+" merupakan fungsi."
+      });
+    }
+    renderRound();
+  }
+};
+
+const B2_DKR = {
+  label: "Domain, Kodomain, Range",
+  title: "Ketuk tiap istilah untuk melihat bagian mana yang dimaksud.",
+  sub: "Ketiga istilah ini sering tertukar. Buktikan kamu bisa membedakannya.",
+  mount(ctx){
+    const domain = ["1","2","3","4"], codomain = ["2","4","6","8","10"];
+    const pairs = [[0,0],[1,1],[2,2],[3,3]];
+    const dcard = el("div","diagram-card");
+    ctx.visual.appendChild(dcard);
+    const api = buildDiagram(dcard, { domainTitle:"A", codomainTitle:"B", domain, codomain, pairs, interactive:false });
+
+    const info = {
+      domain:{ title:"Domain (Daerah Asal)", text:"Seluruh anggota himpunan A: {1, 2, 3, 4}. Semua anggota A wajib punya pasangan." },
+      kodomain:{ title:"Kodomain (Daerah Kawan)", text:"SELURUH anggota B yang disediakan: {2, 4, 6, 8, 10}, termasuk 10, walau ternyata tak dipakai siapa pun." },
+      range:{ title:"Range (Daerah Hasil)", text:"Anggota B yang BENAR-BENAR menjadi pasangan: {2, 4, 6, 8}. 10 TIDAK termasuk, karena tak ada anggota A yang dipetakan ke situ." }
+    };
+    const explored = new Set();
+    const btnPanel = el("div","panel");
+    btnPanel.innerHTML = '<div class="panel-title"><h4>f(x) = 2x, dari A={1,2,3,4} ke B={2,4,6,8,10}</h4></div><div class="term-row" id="dkrBtns"><button class="term-btn" type="button" data-k="domain"><span>Domain</span></button><button class="term-btn" type="button" data-k="kodomain"><span>Kodomain</span></button><button class="term-btn" type="button" data-k="range"><span>Range</span></button></div>';
+    ctx.controls.appendChild(btnPanel);
+    const explainPanel = el("div","panel"); explainPanel.innerHTML = '<p class="reflect-hint">Ketuk salah satu tombol di atas untuk memulai.</p>';
+    ctx.controls.appendChild(explainPanel);
+    const fbWrap = el("div","panel"); fbWrap.style.display="none"; const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+
+    $all("#dkrBtns .term-btn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        $all("#dkrBtns .term-btn").forEach(b=>b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        const key = btn.dataset.k;
+        explored.add(key);
+        api.dNodes.forEach(n=>n.classList.remove("is-active"));
+        api.cNodes.forEach(n=>n.classList.remove("is-active"));
+        if(key==="domain") api.dNodes.forEach(n=>n.classList.add("is-active"));
+        if(key==="kodomain") api.cNodes.forEach(n=>n.classList.add("is-active"));
+        if(key==="range") [0,1,2,3].forEach(i=>api.cNodes[i].classList.add("is-active"));
+        explainPanel.innerHTML = "";
+        explainPanel.appendChild(el("span","eyebrow", info[key].title));
+        const p = el("p","", info[key].text); p.style.marginTop = "8px"; p.style.fontSize="13.8px";
+        explainPanel.appendChild(p);
+        if(explored.size>=3 && !btnPanel.dataset.checkShown){
+          btnPanel.dataset.checkShown = "1";
+          setTimeout(showCheck, 500);
+        }
+      });
+    });
+
+    function showCheck(){
+      fbWrap.style.display = "block";
+      const checkPanel = el("div","panel");
+      checkPanel.innerHTML = '<p style="font-weight:700;font-size:14.5px;margin-bottom:10px;">Satu cek terakhir:</p><p class="mono" style="font-size:13.5px;margin-bottom:10px;">Pernyataan: “10 termasuk range dari fungsi ini.”</p>';
+      const list = el("div","");
+      checkPanel.appendChild(list);
+      ctx.controls.appendChild(checkPanel);
+      renderChoiceRound(list, [
+        { text:"Benar", correct:false, note:"10 memang ada di KODOMAIN, tapi tidak ada anggota A yang menghasilkannya, jadi bukan bagian dari range." },
+        { text:"Salah", correct:true, note:"Tepat! Range hanya berisi hasil yang benar-benar dicapai: {2,4,6,8}. 10 tidak termasuk." }
+      ], fb, "Range hanya berisi hasil yang benar-benar dicapai: {2, 4, 6, 8}. Angka 10 memang ada di KODOMAIN, tapi karena tidak ada anggota A yang menghasilkannya (dipetakan ke situ), 10 BUKAN bagian dari range.", ()=>{ ctx.done(); }, {
+        id:"b2-range", section:"Latihan Fungsi", order:120,
+        question:"Pernyataan: 10 termasuk range dari fungsi ini."
+      });
+      setFeedback(fb, { state:"idle", message:"Ingat lagi penjelasan Range di atas." });
+    }
+  }
+};
+
+const B3_BANGUN_SENDIRI = {
+  label: "Bangun Fungsimu Sendiri",
+  title: "Hubungkan bebas, lalu lihat status fungsinya berubah langsung.",
+  sub: "Cobalah sampai bisa membuatnya BUKAN fungsi, lalu perbaiki lagi supaya jadi fungsi.",
+  mount(ctx){
+    const domain = ["Rio","Tia","Umar"];
+    const codomain = ["Kelas 8A","Kelas 8B"];
+    const pairsConfig = [];
+    let selectedDomain = null, sawValid = false, sawInvalid = false;
+
+    const dcard = el("div","diagram-card");
+    ctx.visual.appendChild(dcard);
+    const api = buildDiagram(dcard, {
+      domainTitle:"Siswa", codomainTitle:"Kelas", domain, codomain, pairs: pairsConfig, interactive:true,
+      onNodeClick(side, idx, nodeEl){
+        if(side==="d"){
+          api.dNodes.forEach(n=>n.classList.remove("is-selected"));
+          selectedDomain = idx; nodeEl.classList.add("is-selected");
+          return;
+        }
+        if(selectedDomain===null){ setFeedback(fb,{state:"idle",message:"Pilih dulu satu siswa di sebelah kiri."}); return; }
+        const existingIdx = pairsConfig.findIndex(p=>p[0]===selectedDomain && p[1]===idx);
+        if(existingIdx>=0) pairsConfig.splice(existingIdx,1);
+        else pairsConfig.push([selectedDomain, idx, ""]);
+        api.dNodes.forEach(n=>n.classList.remove("is-selected"));
+        selectedDomain = null;
+        evaluate();
+        recordStudentAnswer({
+          id:"b3-bangun-fungsi", section:"Latihan Fungsi", order:130,
+          question:"Tuliskan pasangan terakhir yang kamu buat pada relasi siswa dan kelas."
+        }, formatPairAnswer(domain, codomain, pairsConfig));
+      }
+    });
+
+    const verdictPanel = el("div","panel");
+    ctx.controls.appendChild(verdictPanel);
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    setFeedback(fb, { state:"idle", message:"Ketuk siswa lalu kelas untuk menghubungkan. Ketuk pasangan yang sama lagi untuk melepasnya." });
+
+    function evaluate(){
+      const counts = domain.map((_,i)=> pairsConfig.filter(p=>p[0]===i).length);
+      let status, reason, cls;
+      if(counts.every(c=>c===0)){
+        status = "BELUM ADA HUBUNGAN"; reason = "Mulai hubungkan siswa ke kelasnya."; cls = "";
+      } else if(counts.some(c=>c===0)){
+        const name = domain[counts.findIndex(c=>c===0)];
+        status = "BUKAN FUNGSI"; reason = name+" belum punya pasangan kelas."; cls = "line-bad"; sawInvalid = true;
+      } else if(counts.some(c=>c>=2)){
+        const name = domain[counts.findIndex(c=>c>=2)];
+        status = "BUKAN FUNGSI"; reason = name+" punya lebih dari satu kelas sekaligus."; cls = "line-bad"; sawInvalid = true;
+      } else {
+        status = "FUNGSI ✓"; reason = "Setiap siswa punya tepat satu kelas."; cls = "line-ok"; sawValid = true;
+      }
+      pairsConfig.forEach(p=>{ p[2] = cls; });
+      api.draw(true);
+      verdictPanel.innerHTML = "";
+      const badge = el("div","", status);
+      badge.style.cssText = "font-family:var(--font-display);font-weight:700;font-size:20px;padding:10px 0 2px;color:"+(status==="FUNGSI ✓"?"var(--fungsi)":status==="BUKAN FUNGSI"?"var(--salah)":"var(--ink-faint)");
+      verdictPanel.appendChild(el("div","panel-title")).appendChild(el("h4","","Status Saat Ini"));
+      verdictPanel.appendChild(badge);
+      verdictPanel.appendChild(el("p","",reason));
+      if(sawValid && sawInvalid && !ctx._done){
+        ctx._done = true;
+        setFeedback(fb, { state:"success", message:"Mantap, kamu sudah membuktikan sendiri kapan sesuatu jadi fungsi dan kapan tidak." });
+        ctx.done();
+      }
+    }
+    evaluate();
+  }
+};
+
+const B4_TANTANGAN = {
+  label: "Tantangan Campuran",
+  title: "Gabungkan semua yang sudah kamu pelajari di modul ini.",
+  sub: "Tiga tantangan singkat, dari membaca diagram sampai bernalar kasus nyata.",
+  mount(ctx){
+    const rounds = [
+      { kind:"diagram-mc", domain:["K","L","M"], codomain:["x","y","z"], pairs:[[0,0],[0,1],[1,2],[2,2]],
+        prompt:"Mengapa diagram di atas BUKAN merupakan fungsi?",
+        options:[
+          { text:"Karena K memiliki dua pasangan", correct:true, note:"Tepat, K terhubung ke x dan y sekaligus." },
+          { text:"Karena L dan M memiliki pasangan yang sama (z)", correct:false, note:"Itu wajar dan sah, masalahnya ada pada K." },
+          { text:"Karena ada anggota B yang tidak dipasangkan", correct:false, note:"x, y, z semua sudah punya pasangan." },
+          { text:"Karena jumlah anggota A dan B tidak sama", correct:false, note:"Jumlah anggota A dan B tidak harus sama." }
+        ],
+        reflectionText:"Karena K memiliki DUA anak panah keluar (ke x dan ke y). Padahal syarat fungsi: setiap anggota A hanya boleh punya TEPAT SATU pasangan. L dan M yang sama-sama menuju z itu tidak masalah, bukan itu sebabnya." },
+      { kind:"fill", context:"Fungsi g dari P = {1, 2, 3} ke Q = {1, 4, 9, 16} dengan aturan g(x) = x².",
+        prompt:"Tuliskan anggota Range dari fungsi g (pisahkan dengan koma).",
+        placeholder:"contoh: 1,4,...", parseAsSet:true, acceptedSet:[1,4,9],
+        fbOk:"Tepat! g(1)=1, g(2)=4, g(3)=9, jadi range-nya {1,4,9}. Angka 16 ada di kodomain tapi tidak pernah dihasilkan.",
+        fbBad:"Hitung g(1), g(2), g(3) satu per satu, lalu kumpulkan hasilnya." },
+      { kind:"mc", context:"Ada yang berpendapat: “Relasi ‘setiap siswa dengan mata pelajaran favoritnya’ pasti sebuah fungsi.”",
+        prompt:"Apakah pendapat itu tepat?",
+        options:[
+          { text:"Ya, pasti fungsi, karena setiap siswa hanya satu orang", correct:false, note:"Jumlah orangnya bukan yang menentukan." },
+          { text:"Belum tentu, bisa saja seorang siswa punya lebih dari satu favorit", correct:true, note:"Tepat! Kalau boleh sebut dua mapel favorit, itu melanggar syarat fungsi." },
+          { text:"Bukan fungsi, karena mata pelajaran jumlahnya banyak", correct:false, note:"Banyaknya pilihan di B tidak menentukan fungsi atau bukan." },
+          { text:"Ya, pasti fungsi, karena mata pelajaran juga sebuah himpunan", correct:false, note:"Benar itu sebuah himpunan, tapi bukan alasan otomatis jadi fungsi." }
+        ],
+        reflectionText:"Belum tentu tepat. Kalau seorang siswa boleh menyebut lebih dari satu mata pelajaran favorit, siswa itu akan punya lebih dari satu pasangan, dan itu melanggar syarat fungsi. Supaya pasti jadi fungsi, aturannya harus dibuat tegas: “favorit” wajib hanya satu." }
+    ];
+    let round = 0;
+    const promptWrap = el("div","panel");
+    ctx.visual.appendChild(promptWrap);
+    const fbWrap = el("div","panel"); const fb = el("div","feedback-banner"); fbWrap.appendChild(fb); ctx.controls.appendChild(fbWrap);
+    const bodyPanel = el("div","panel"); ctx.controls.appendChild(bodyPanel);
+
+    function renderRound(){
+      const r = rounds[round];
+      let head = '<div class="panel-title"><h4>Tantangan '+(round+1)+'/'+rounds.length+'</h4><span>'+roundPipsHTML(round, rounds.length)+'</span></div>';
+      if(r.context) head += '<p class="mono" style="font-size:13px;color:var(--ink-soft);margin-bottom:8px;">'+r.context+'</p>';
+      head += '<p style="font-weight:700;font-size:15px;">'+r.prompt+'</p>';
+      if(r.kind==="diagram-mc"){
+        promptWrap.innerHTML = '<div class="panel-title"><h4>Tantangan '+(round+1)+'/'+rounds.length+'</h4><span>'+roundPipsHTML(round, rounds.length)+'</span></div>';
+        const dcard = el("div","");
+        buildDiagram(dcard, { domainTitle:"A", codomainTitle:"B", domain:r.domain, codomain:r.codomain, pairs:r.pairs, interactive:false });
+        promptWrap.appendChild(dcard);
+        bodyPanel.innerHTML = '<p style="font-weight:700;font-size:15px;margin-bottom:10px;">'+r.prompt+'</p>';
+        const list = el("div","");
+        bodyPanel.appendChild(list);
+        renderChoiceRound(list, r.options, fb, r.reflectionText, nextRound, {
+          id:"b4-"+(round+1), section:"Latihan Fungsi", order:140+round,
+          question:r.prompt
+        });
+      } else if(r.kind==="fill"){
+        promptWrap.innerHTML = head;
+        bodyPanel.innerHTML = "";
+        renderFillRound(bodyPanel, r, fb, ()=> setTimeout(nextRound, 900), {
+          id:"b4-"+(round+1), section:"Latihan Fungsi", order:140+round,
+          question:r.prompt
+        });
+      } else {
+        promptWrap.innerHTML = head;
+        bodyPanel.innerHTML = "";
+        renderChoiceRound(bodyPanel, r.options, fb, r.reflectionText, nextRound, {
+          id:"b4-"+(round+1), section:"Latihan Fungsi", order:140+round,
+          question:r.prompt
+        });
+      }
+      setFeedback(fb, { state:"idle", message:"Silakan jawab." });
+    }
+    function nextRound(){
+      round++;
+      if(round>=rounds.length){
+        setFeedback(fb, { state:"hint", message:"Modul Fungsi selesai! Kamu dapat kembali ke beranda untuk melanjutkan atau mengulang materi." });
+        ctx.done();
+      } else renderRound();
+    }
+    renderRound();
+  }
+};
+
+const B5_REFLEKSI = makeReflectionStage(
+  [
+    "Fungsi adalah relasi khusus: setiap anggota A wajib punya TEPAT SATU pasangan di B.",
+    "Domain adalah himpunan asal, kodomain adalah himpunan kawan, dan range adalah hasil yang benar-benar dicapai.",
+    "Range selalu bagian dari kodomain, tapi belum tentu sama persis dengan kodomain."
+  ],
+  [
+    "Menurutmu, apa yang membedakan fungsi dari relasi biasa? Jelaskan dengan bahasamu sendiri.",
+    "Menurutmu, kenapa syarat “tepat satu pasangan” itu penting? Coba bayangkan kalau syarat itu tidak ada, kira-kira apa masalahnya?"
+  ],
+  "fungsiFinal"
+);
+
+MODULES.fungsi = {
+  key:"fungsi", title:"Memahami Fungsi", short:"Fungsi", iconLetter:"B",
+  desc:"Relasi yang punya satu aturan ketat: tepat satu pasangan.",
+  stages:[B1_PENDETEKSI, B2_DKR, B3_BANGUN_SENDIRI, B4_TANTANGAN, B5_REFLEKSI]
+};
+
+
+/* ============================================================
+   INISIALISASI GLOBAL
+   ============================================================ */
+function init(){
+  initShellRefs();
+  initAppState();
+  renderHome();
+}
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+})();
+</script>
+</body>
+</html>
